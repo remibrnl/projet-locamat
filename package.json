@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/remibrnl/projet-locamat/issues"
   },
-  "homepage": "https://github.com/remibrnl/projet-locamat#readme"
+  "homepage": "https://github.com/remibrnl/projet-locamat#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
