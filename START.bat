@@ -1,2 +1,3 @@
 @echo off
-SET DEBUG=projet-locamat:* & npm start
+nodemon server
+pause
