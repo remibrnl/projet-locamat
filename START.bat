@@ -1,3 +1,3 @@
 @echo off
-nodemon server
+call nodemon server
 pause
