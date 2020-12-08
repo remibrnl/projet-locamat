@@ -1,3 +1,3 @@
 @echo off
-call mocha -R spec spec.js
+call npm run test
 pause
