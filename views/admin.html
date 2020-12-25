@@ -1,0 +1,164 @@
+<%- include('header') -%>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	<a class="navbar-brand" href="/">Locmat</a>
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+
+	<div class="collapse navbar-collapse">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item">
+				<a href="" class="nav-link">Matériel </a>
+			</li>
+			<li class="nav-item active">
+				<a href="" class="nav-link">Administration <span class="sr-only">(actuel)</span></a>
+			</li>
+		</ul>
+	</div>
+
+	<button class="btn btn-outline-danger my-2 my-sm-0">Déconnection</button>
+</nav>
+
+<div class="container">
+
+	<div class="admin-buttons">
+		<button class="btn btn-primary" data-toggle="modal" data-target="#createUserModal">Ajouter un utilisateur</button>
+	</div>
+
+	<div class="card shadow">
+		<div class="card-header">
+			Liste du matériel
+		</div>
+		<div class="card-body">
+			<table class="table table-bordered shadow-sm">
+				<thead>
+					<tr>
+						<th class="col">Nom</th>
+						<th class="col">Prénom</th>
+						<th class="col">Email</th>
+						<th class="col">Matricule</th>
+						<th class="col">Rôle</th>
+						<th class="col">Liste</th>
+					</tr>
+				</thead>
+				<tbody>
+					<!-- A FAIRE EN EXPRESS-->
+					<!-- listes des utilisateurs-->
+					<tr>
+						<td>a</td>
+						<td>a</td>
+						<td>a</td>
+						<td>a</td>
+						<td>a</td>
+						<td><button class="btn btn-outline-info" data-toggle="modal" data-target="#userBorrowedDevicesModal">Liste</button></td>
+					</tr>
+					<!-- FIN DE A FAIRE EN EXPRESS-->
+				</tbody>
+			</table>
+		</div>
+</div>
+
+</div>
+
+
+
+		
+<!-- NEW USER CREATION POPUP/MODAL -->
+<div class="modal fade" id="createUserModal" tabindex="-1" role="dialog" aria-labelledby="createUserModalTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="createUserModalTitle">Nouvel utilisateur</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form>
+
+					<div class="form-group">
+						<label for="newUserInputFirstname">Prénom</label>
+						<input type="text" class="form-control" id="newUserInputFirstname">
+					</div>
+
+					<div class="form-group">
+							<label for="newUserInputLastname">Nom</label>
+							<input type="text" class="form-control" id="newUserInputLastname">
+					</div>
+
+					<div class="form-group">
+						<label for="newUserInputEmail">Adresse email</label>
+						<input type="email" class="form-control" id="newUserInputEmail" aria-describedby="emailHelp">
+					</div>
+					
+					<div class="form-group">
+						<label for="newUserInputID">Nom</label>
+						<input type="number" class="form-control" id="newUserInputID">
+					</div>
+				</form>
+				<div class="form-check">
+					<input type="radio" class="form-check-input" name="newUserRadiosRole" id="newUserRadioRoleStandard" value="standard" checked>
+					<label for="newUserRadioRoleStandard" class="form-check-label">Emprunteur.euse</label>
+				</div>
+				<div class="form-check">
+					<input type="radio" class="form-check-input" name="newUserRadiosRole" id="newUserRadioRoleAdmin" value="admin">
+					<label for="newUserRadioRoleAdmin" class="form-check-label">Administrateur.trice</label>
+				</div>
+		</div>
+		<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+				<button type="button" class="btn btn-primary">Créer</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<!-- USER BORROWED DEVICES LIST POPUP/MODAL -->
+<div class="modal fade" id="userBorrowedDevicesModal" tabindex="-1" role="dialog" aria-labelledby="userBorrowedDevicesModalTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="userBorrowedDevicesModalTitle">Liste du matérial emprunté pour NOM PRENOM</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<table class="table table-bordered shadow-sm">
+					<thead>
+						<tr>
+							<th class="col">Nom</th>
+							<th class="col">Version</th>
+							<th class="col">Référence</th>
+							<th class="col">Numéro</th>
+							<th class="col">Date de début d'emprunt</th>
+							<th class="col">Date de fin d'emprunt</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!-- A FAIRE EN EXPRESS-->
+						<!-- liste du matériel emprunté pour un utilisateur donné-->
+						<tr>
+							<td>a</td>
+							<td>a</td>
+							<td>a</td>
+							<td>a</td>
+							<td>a</td>
+							<td>a</td>
+						</tr>
+						<!-- FIN DE A FAIRE EN EXPRESS-->
+					</tbody>
+				</table>
+			</div>
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<%- include('footer') -%>
