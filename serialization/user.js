@@ -7,36 +7,60 @@ class Users{
     #role;
     #hashpasswd
 
-    constructor(id, lastname, firstname, email, role, hashpasswd){
+    constructor(id, lastname, firstname, email, role, hashPasswd){
         this.id = id
         this.lastname = lastname
         this.firstname = firstname
         this.email = email
         this.role = role
-        this.hashpasswd = hashpasswd
+        this.hashPasswd = hashPasswd
     }
     
-    get getId() {
+    get idd() {
         return this.#id;
     }
 
-    setId(id) {
-        this.#id = id;
+    set id(id) {
+        this.id = id;
     }
 
-    get getLastname() {
-        return this.#lastname;
+    get lastname() {
+        return this.lastname;
     }
 
-    setLastname(lastname) {
-        this.#lastname = lastname;
+    set lastname(lastname) {
+        this.lastname = lastname;
     }
 
-    get getFirstname() {
-        return this.#firstname;
+    get firstname() {
+        return this.firstname;
     }
 
-    setFirstname(firstname) {
-        this.#firstname = firstname
+    set firstname(firstname) {
+        this.firstname = firstname
+    }
+
+    get email() {
+        return this.email;
+    }
+
+    set email(email) {
+        this.email = email
+    }
+
+    get role() {
+        return this.role;
+    }
+
+    set role(role) {
+        this.role = role;
+    }
+
+    get hashPasswd() {
+        return this.hashPasswd;
+    }
+
+    set hashPasswd(hashPasswd) {
+        this.hashPasswd = hashPasswd;
     }
 }

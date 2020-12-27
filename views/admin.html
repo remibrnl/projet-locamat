@@ -9,7 +9,7 @@
 	<div class="collapse navbar-collapse">
 		<ul class="navbar-nav mr-auto">
 			<li class="nav-item">
-				<a href="" class="nav-link">Matériel </a>
+				<a href=".." class="nav-link">Matériel </a>
 			</li>
 			<li class="nav-item active">
 				<a href="" class="nav-link">Administration <span class="sr-only">(actuel)</span></a>
@@ -23,12 +23,13 @@
 <div class="container">
 
 	<div class="admin-buttons">
+		<button class="btn btn-success" data-toggle="modal" data-target="#createDeviceModal">Ajout un matériel</button>
 		<button class="btn btn-primary" data-toggle="modal" data-target="#createUserModal">Ajouter un utilisateur</button>
 	</div>
 
 	<div class="card shadow">
 		<div class="card-header">
-			Liste du matériel
+			Liste des utilisateurs
 		</div>
 		<div class="card-body">
 			<table class="table table-bordered shadow-sm">
@@ -39,7 +40,8 @@
 						<th class="col">Email</th>
 						<th class="col">Matricule</th>
 						<th class="col">Rôle</th>
-						<th class="col">Liste</th>
+						<th class="col"></th>
+						<th class="col"></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -51,19 +53,103 @@
 						<td>a</td>
 						<td>a</td>
 						<td>a</td>
-						<td><button class="btn btn-outline-info" data-toggle="modal" data-target="#userBorrowedDevicesModal">Liste</button></td>
+						<td><button class="btn btn-outline-info" data-toggle="modal" data-target="#userBorrowedDevicesModal">Matériels empruntés</button></td>
+						<td><button class="btn btn-outline-info" data-toggle="modal" data-target="#userEditionModal">Modifier</button></td>
 					</tr>
 					<!-- FIN DE A FAIRE EN EXPRESS-->
 				</tbody>
 			</table>
 		</div>
-</div>
+	</div>
+
+	<hr>
+
+	<div class="card shadow">
+        <div class="card-header">
+            Liste du matériel
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered shadow-sm">
+                <thead>
+                    <tr>
+                        <th class="col">Nom</th>
+                        <th class="col">Version</th>
+                        <th class="col">Référence</th>
+                        <th class="col">Numéro</th>
+                        <th class="col">Emprunteur</th>
+                        <th class="col">Date de début d'emprunt</th>
+						<th class="col">Date de fin d'emprunt</th>
+						<th class="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- A FAIRE EN EXPRESS-->
+                    <tr>
+                        <td>a</td>
+                        <td>a</td>
+                        <td>a</td>
+                        <td>a</td>
+                        <td>a</td>
+                        <td>a</td>
+						<td>a</td>
+						<td><button class="btn btn-outline-info" data-toggle="modal" data-target="#deviceEditionModal">Modifier</button></td>
+                    </tr>
+                    <!-- FIN DE A FAIRE EN EXPRESS-->
+                </tbody>
+            </table>
+        </div>
+    </div>
 
 </div>
 
 
 
-		
+<!-- NEW DEVICE CREATION POPUP/MODAL -->
+<div class="modal fade" id="createDeviceModal" tabindex="-1" role="dialog" aria-labelledby="createDeviceModalTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="createDeviceModalTitle">Nouveau matériel</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form>
+
+					<div class="form-group">
+							<label for="newDeviceInputName">Nom</label>
+							<input type="text" class="form-control" id="newDeviceInputName" placeholder="iPhone 12 Pro">
+					</div>
+					
+					<div class="form-group">
+						<label for="newDeviceInputVersion">Version</label>
+						<input type="number" class="form-control" id="newDeviceInputVersion" placeholder="2">
+					</div>
+					
+					<div class="form-group">
+						<label for="newDeviceInputPicture">Version</label>
+						<input type="file" class="form-control-file" id="newUserInputPicture">
+					</div>
+					
+					<div class="form-group">
+						<label for="newDeviceInputPhoneNumber">Numero de téléphone</label>
+						<input type="number" class="form-control" id="newDeviceInputPhoneNumber" placeholder="0656842034">
+					</div>
+
+				</form>
+		</div>
+		<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+				<button type="button" class="btn btn-primary">Créer</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
 <!-- NEW USER CREATION POPUP/MODAL -->
 <div class="modal fade" id="createUserModal" tabindex="-1" role="dialog" aria-labelledby="createUserModalTitle" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
@@ -79,31 +165,31 @@
 
 					<div class="form-group">
 						<label for="newUserInputFirstname">Prénom</label>
-						<input type="text" class="form-control" id="newUserInputFirstname">
+						<input type="text" class="form-control" id="newUserInputFirstname" placeholder="Pierre">
 					</div>
 
 					<div class="form-group">
 							<label for="newUserInputLastname">Nom</label>
-							<input type="text" class="form-control" id="newUserInputLastname">
+							<input type="text" class="form-control" id="newUserInputLastname" placeholder="Gasly">
 					</div>
 
 					<div class="form-group">
 						<label for="newUserInputEmail">Adresse email</label>
-						<input type="email" class="form-control" id="newUserInputEmail" aria-describedby="emailHelp">
+						<input type="email" class="form-control" id="newUserInputEmail" aria-describedby="emailHelp" placeholder="pierre.gasly@scuderiaalphatauri.com">
 					</div>
 					
 					<div class="form-group">
-						<label for="newUserInputID">Nom</label>
-						<input type="number" class="form-control" id="newUserInputID">
+						<label for="newUserInputID">Matricule</label>
+						<input type="number" class="form-control" id="newUserInputID" placeholder="10">
 					</div>
 				</form>
 				<div class="form-check">
 					<input type="radio" class="form-check-input" name="newUserRadiosRole" id="newUserRadioRoleStandard" value="standard" checked>
-					<label for="newUserRadioRoleStandard" class="form-check-label">Emprunteur.euse</label>
+					<label for="newUserRadioRoleStandard" class="form-check-label">Emprunteur</label>
 				</div>
 				<div class="form-check">
 					<input type="radio" class="form-check-input" name="newUserRadiosRole" id="newUserRadioRoleAdmin" value="admin">
-					<label for="newUserRadioRoleAdmin" class="form-check-label">Administrateur.trice</label>
+					<label for="newUserRadioRoleAdmin" class="form-check-label">Administrateur</label>
 				</div>
 		</div>
 		<div class="modal-footer">
@@ -160,5 +246,11 @@
 		</div>
 	</div>
 </div>
+
+<footer class="footer mt-auto py-3">
+    <div class="container">
+        <span class="text-muted">Locamat, 2020</span>
+    </div>
+</footer>
 
 <%- include('footer') -%>
