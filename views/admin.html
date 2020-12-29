@@ -105,147 +105,18 @@
 
 
 <!-- NEW DEVICE CREATION POPUP/MODAL -->
-<div class="modal fade" id="createDeviceModal" tabindex="-1" role="dialog" aria-labelledby="createDeviceModalTitle" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="createDeviceModalTitle">Nouveau matériel</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<form>
-
-					<div class="form-group">
-							<label for="newDeviceInputName">Nom</label>
-							<input type="text" class="form-control" id="newDeviceInputName" placeholder="iPhone 12 Pro">
-					</div>
-					
-					<div class="form-group">
-						<label for="newDeviceInputVersion">Version</label>
-						<input type="number" class="form-control" id="newDeviceInputVersion" placeholder="2">
-					</div>
-					
-					<div class="form-group">
-						<label for="newDeviceInputPicture">Version</label>
-						<input type="file" class="form-control-file" id="newUserInputPicture">
-					</div>
-					
-					<div class="form-group">
-						<label for="newDeviceInputPhoneNumber">Numero de téléphone</label>
-						<input type="number" class="form-control" id="newDeviceInputPhoneNumber" placeholder="0656842034">
-					</div>
-
-				</form>
-		</div>
-		<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-				<button type="button" class="btn btn-primary">Créer</button>
-			</div>
-		</div>
-	</div>
-</div>
+<%- include('device_creation_popup.ejs') -%>
 
 
 
 
 <!-- NEW USER CREATION POPUP/MODAL -->
-<div class="modal fade" id="createUserModal" tabindex="-1" role="dialog" aria-labelledby="createUserModalTitle" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="createUserModalTitle">Nouvel utilisateur</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<form>
-
-					<div class="form-group">
-						<label for="newUserInputFirstname">Prénom</label>
-						<input type="text" class="form-control" id="newUserInputFirstname" placeholder="Pierre">
-					</div>
-
-					<div class="form-group">
-							<label for="newUserInputLastname">Nom</label>
-							<input type="text" class="form-control" id="newUserInputLastname" placeholder="Gasly">
-					</div>
-
-					<div class="form-group">
-						<label for="newUserInputEmail">Adresse email</label>
-						<input type="email" class="form-control" id="newUserInputEmail" aria-describedby="emailHelp" placeholder="pierre.gasly@scuderiaalphatauri.com">
-					</div>
-					
-					<div class="form-group">
-						<label for="newUserInputID">Matricule</label>
-						<input type="number" class="form-control" id="newUserInputID" placeholder="10">
-					</div>
-				</form>
-				<div class="form-check">
-					<input type="radio" class="form-check-input" name="newUserRadiosRole" id="newUserRadioRoleStandard" value="standard" checked>
-					<label for="newUserRadioRoleStandard" class="form-check-label">Emprunteur</label>
-				</div>
-				<div class="form-check">
-					<input type="radio" class="form-check-input" name="newUserRadiosRole" id="newUserRadioRoleAdmin" value="admin">
-					<label for="newUserRadioRoleAdmin" class="form-check-label">Administrateur</label>
-				</div>
-		</div>
-		<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-				<button type="button" class="btn btn-primary">Créer</button>
-			</div>
-		</div>
-	</div>
-</div>
+<%- include('user_creation_popup.ejs') -%>
 
 
 
 <!-- USER BORROWED DEVICES LIST POPUP/MODAL -->
-<div class="modal fade" id="userBorrowedDevicesModal" tabindex="-1" role="dialog" aria-labelledby="userBorrowedDevicesModalTitle" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="userBorrowedDevicesModalTitle">Liste du matérial emprunté pour NOM PRENOM</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<table class="table table-bordered shadow-sm">
-					<thead>
-						<tr>
-							<th class="col">Nom</th>
-							<th class="col">Version</th>
-							<th class="col">Référence</th>
-							<th class="col">Numéro</th>
-							<th class="col">Date de début d'emprunt</th>
-							<th class="col">Date de fin d'emprunt</th>
-						</tr>
-					</thead>
-					<tbody>
-						<!-- A FAIRE EN EXPRESS-->
-						<!-- liste du matériel emprunté pour un utilisateur donné-->
-						<tr>
-							<td>a</td>
-							<td>a</td>
-							<td>a</td>
-							<td>a</td>
-							<td>a</td>
-							<td>a</td>
-						</tr>
-						<!-- FIN DE A FAIRE EN EXPRESS-->
-					</tbody>
-				</table>
-			</div>
-
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-			</div>
-		</div>
-	</div>
-</div>
+<%- include('user_borrowed_list_popup.ejs') -%>
 
 <footer class="footer mt-auto py-3">
     <div class="container">

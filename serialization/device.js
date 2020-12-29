@@ -1,3 +1,5 @@
+var express = require('express');
+
 class Device {
 
     #ref;
