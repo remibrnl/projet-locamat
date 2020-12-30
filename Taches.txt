@@ -1,0 +1,31 @@
+Créer un nouveau matériel (insert dans la table matériel) --> Romain 
+	Formulaire + methode post + insert BDD 
+
+Modifier un matériel (alter sur la table matériel)
+	bouton modifier dans la page consulter en rôle admin 
+	
+Supprimer un matériel (delete dans la table matériel) --> Guillaume
+	Bouton sur page pour consulter + delet BDD
+
+Consulter du matériel (select dans la table)
+	methode GET sur une page /materiel
+ 
+Détail d’un utilisateur --> Maxime (a faire)
+	/profil --> affichage des infos 
+	/users --> uniquement pour un admin
+
+Créer un compte utilisateur (admin ou emprunteur) --> Maxime (test a faire + vérifier que tout est ok + notion d'admin) 
+
+Modifier un utilisateur --> Maxime (a faire) 
+	/profil pour modifier donnée perso 
+	/users + selection pour modifier en rôle admin 
+
+Réservation de matériel
+	bouton réserver sur la page /materiel 
+
+Notification/Alerte (optionnel)
+
+Fonction BDD + création bdd --> Rémi 
+
+Rapport spec lot 2 et 3 
+
