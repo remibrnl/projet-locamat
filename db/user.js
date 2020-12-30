@@ -1,20 +1,39 @@
-var express = require('express');
 require('dotenv').config()
 
+var express = require('express')
+var mysql = require('mysql')
+
 module.exports = {
-    createUser: function (user, callback) {
-        /*let fs = require('fs')
-        let users = require('./serialization/users.json')
+    
+    find: function (inputEmail, callback) {
+
+        let connection = mysql.createConnection({
+            host: 'localhost',
+            user: 'root',
+            password: '',
+            database: 'locamat'
+          })
         
-        users.push(user)
+        connection.query('SELECT * FROM userTable WHERE mail = ? ', [inputEmail], (err,data) => {
+        if(err) {
+            callback(err, null)
+        }
 
-        fs.writeFile(process.env.USERS_JSON_PATH, JSON.stringify(users, null, 2), (err) => {
-            if (err) {
-                return console.log(err)
-            }
-            console.log("user created and serialized.")
-        })*/
+        if(data[0] === undefined) {
+            //res.render('register',{ message: 'You have to register first' });
+            callback(null, null)
+        }
 
+        let user = new user.User(data[0].id, data[0].lastname, data[0].firstname, data[0].mail, data[0].isAdmin, data[0].hashedPassword)
+
+        callback(null, data)
+
+        })
+    },
+
+    /*
+    create: function (user, callback) {
+        
         let fs = require('fs')
 
         fs.readFile(process.env.USERS_JSON_PATH, 'utf8', (err, data) => {
@@ -35,8 +54,9 @@ module.exports = {
                 })
             }
         })
-    },
 
+        
+    },*/
 
     User: class {
 

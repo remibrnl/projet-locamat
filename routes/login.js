@@ -6,6 +6,8 @@ var jwt = require('jsonwebtoken');
 var mysql = require('mysql');
 var bcrypt = require('bcrypt');
 
+var user = require('../db/user.js')
+
 
 var connection = mysql.createConnection({
   host: 'localhost',
@@ -20,6 +22,7 @@ router.get('/', async(req, res) =>{
 });
 
 router.post('/',(req,res) =>{
+  /*
   connection.query("SELECT * FROM userTable WHERE mail = ? ", [req.body.mail], async(err,result)=>{
     if(err) throw err;
     if(result[0] === undefined) {
@@ -44,8 +47,36 @@ router.post('/',(req,res) =>{
     } catch {
       res.status(400).send();
     }
-  }); 
+  }); */
   
+  user.find(req.body.mail, async(err, user) => {
+
+    if (err) {
+      console.log(err)
+      res.status(400).send()
+    }
+
+    else if (user == null) {
+      res.render('register',{ message: 'You have to register first' })
+    }
+
+    else {
+
+      try { 
+        if(await bcrypt.compare(req.body.password, user.hashpasswd)){
+          const accessToken = jwt.sign(user,process.env.ACCESS_TOKEN_SECRET);
+          res.cookie('token',accessToken.toString())
+          res.redirect('/')
+        } else {
+          res.render('login',{message: 'Wrong password'})
+        }
+      } catch {
+        res.status(400).send()
+      }
+
+    }
+  })
+
 })
 
 module.exports = router;
