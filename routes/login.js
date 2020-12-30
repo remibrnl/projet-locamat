@@ -22,7 +22,7 @@ router.get('/', async(req, res) =>{
 });
 
 router.post('/',(req,res) =>{
-  /*
+  
   connection.query("SELECT * FROM userTable WHERE mail = ? ", [req.body.mail], async(err,result)=>{
     if(err) throw err;
     if(result[0] === undefined) {
@@ -47,9 +47,9 @@ router.post('/',(req,res) =>{
     } catch {
       res.status(400).send();
     }
-  }); */
+  });
   
-  user.find(req.body.mail, async(err, user) => {
+  /*user.find(req.body.mail, async(err, user) => {
 
     if (err) {
       console.log(err)
@@ -62,20 +62,23 @@ router.post('/',(req,res) =>{
 
     else {
 
+      console.log(user)
+
       try { 
-        if(await bcrypt.compare(req.body.password, user.hashpasswd)){
+        if(await bcrypt.compare(req.body.password, user.hashPasswd)){
           const accessToken = jwt.sign(user,process.env.ACCESS_TOKEN_SECRET);
           res.cookie('token',accessToken.toString())
           res.redirect('/')
         } else {
           res.render('login',{message: 'Wrong password'})
         }
-      } catch {
+      } catch (err) {
+        console.log(err)
         res.status(400).send()
       }
 
     }
-  })
+  })*/
 
 })
 
