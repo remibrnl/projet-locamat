@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var fs = require('fs')
+require('dotenv').config()
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -11,14 +12,36 @@ var loginRouter = require('./routes/login');
 var adminRouter = require('./routes/admin');
 var registerRouteur = require('./routes/register')
 
-//var user = require('serialization/user');
+var user = require('./serialization/user');
 //var device = require('serialization/device');
 
-// data reading
-var users = JSON.parse(fs.readFileSync('serialization/users.json'))
-var devices = JSON.parse(fs.readFileSync('serialization/devices.json'))
+// ZONE DE TESTS------------------
+var users = JSON.parse(fs.readFileSync(process.env.USERS_JSON_PATH))
+var devices = JSON.parse(fs.readFileSync(process.env.DEVICES_JSON_PATH))
 console.log(users)
 console.log(devices)
+
+var user1 = new user.User(1, "lastname", "firstname", "email", "role", "hashPasswd");
+var user2 = new user.User(2, "lastname", "firstname", "email", "role", "hashPasswd");
+
+user.createUser(user1, (err) => {
+  if (err) {
+    console.log(err)
+  }
+  else {
+    console.log("user1 serialized")
+  }
+})
+user.createUser(user2, (err) => {
+  if (err) {
+    console.log(err)
+  }
+  else {
+    console.log("user2 serialized")
+  }
+})
+
+// FIN ZONES DE TEST----------------
 
 var app = express();
 
@@ -45,8 +68,6 @@ app.use('/users', usersRouter);
 app.use('/login', loginRouter);
 app.use('/admin', adminRouter);
 app.use('/register',registerRouteur);
-
-console.log('listening...');
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
