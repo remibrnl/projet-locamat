@@ -16,8 +16,8 @@ router.get('/', (req,res)=>{
     res.render('register', { title: 'Locamat : Register', message: req.message});
 })
 
-router.post('/',async(req,res)=>{
-    try{
+router.post('/', async(req, res, next)=>{
+    try {
         var hashedPassword = await bcrypt.hash(req.body.password,10);
         connection.query("INSERT INTO userTable(`id`,`lastName`,`firstName`,`mail`,`isAdmin`,`hashedPassword`) VALUES(?,?,?,?,?,?)",[
             req.body.id, 
@@ -26,13 +26,16 @@ router.post('/',async(req,res)=>{
             req.body.mail,
             true,
             hashedPassword    
-        ], (err,result) =>{
-            if(err) throw err; 
-            console.log(result);
+        ], (err, result) => {
+            if(err) {
+                next(err)
+            }
+            console.log(result)
+            res.redirect('/login')
         });
-    } catch{
+    } catch (err) {
         connection.end();
-        res.send(500)
+        next(err)
     }
 })
 

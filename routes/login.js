@@ -21,13 +21,17 @@ router.get('/', async(req, res) =>{
   res.render('login', { title: 'Locamat : Login', message: req.message});
 });
 
-router.post('/',(req,res) =>{
+router.post('/',(req, res, next) => {
   
-  connection.query("SELECT * FROM userTable WHERE mail = ? ", [req.body.mail], async(err,result)=>{
-    if(err) throw err;
+  connection.query("SELECT * FROM userTable WHERE mail = ? ", [req.body.mail], async(err,result) => {
+    if(err) {
+      next(err)
+    }
+
     if(result[0] === undefined) {
       res.render('register',{ message: 'You have to register first' }); 
     }
+
     var user = {
       id: result[0].id,
       lastName: result[0].lastName, 
@@ -35,8 +39,9 @@ router.post('/',(req,res) =>{
       mail: result[0].mail, 
       isAdmin: result[0].isAdmin, 
       password: result[0].hashedPassword
-    };
-    try{ 
+    }
+
+    try { 
       if(await bcrypt.compare(req.body.password,user.password)){
         const accessToken = jwt.sign(user,process.env.ACCESS_TOKEN_SECRET);
         res.cookie('token',accessToken.toString())
@@ -44,41 +49,10 @@ router.post('/',(req,res) =>{
       } else {
         res.render('login',{message: 'Wrong password'})
       }
-    } catch {
-      res.status(400).send();
+    } catch (err) {
+      next(err)
     }
   });
-  
-  /*user.find(req.body.mail, async(err, user) => {
-
-    if (err) {
-      console.log(err)
-      res.status(400).send()
-    }
-
-    else if (user == null) {
-      res.render('register',{ message: 'You have to register first' })
-    }
-
-    else {
-
-      console.log(user)
-
-      try { 
-        if(await bcrypt.compare(req.body.password, user.hashPasswd)){
-          const accessToken = jwt.sign(user,process.env.ACCESS_TOKEN_SECRET);
-          res.cookie('token',accessToken.toString())
-          res.redirect('/')
-        } else {
-          res.render('login',{message: 'Wrong password'})
-        }
-      } catch (err) {
-        console.log(err)
-        res.status(400).send()
-      }
-
-    }
-  })*/
 
 })
 
