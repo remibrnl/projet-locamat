@@ -22,35 +22,80 @@ class User {
     }
 }
 
-function find(inputEmail, callback) {
-
-    let connection = mysql.createConnection({
+function getConnection() {
+    return connection = mysql.createConnection({
         host: 'localhost',
         user: 'root',
         password: '',
         database: 'locamat'
-      })
-    
-    connection.query('SELECT * FROM userTable WHERE mail = ? ', [inputEmail], (err, data) => {
-        if(err) {
-            callback(err, null)
-        }
-
-        else if(data[0] === undefined) {
-            //res.render('register',{ message: 'You have to register first' });
-            callback(null, null)
-        }
-
-        else {
-            let user = new User(data[0].id, data[0].lastname, data[0].firstname, data[0].mail, data[0].isAdmin, data[0].hashedPassword)
-
-            callback(null, user)
-        }
     })
 }
 
-module.exports = {
+function findByEmail(email, callback) {
+
+    var connection = getConnection()
     
+    connection.query('SELECT * FROM userTable WHERE mail = ? ;', [email], (err, results) => {
+        if(err) {
+            callback(err, null)
+        }
+        else if (results[0] === undefined) {
+            callback(null, undefined)
+        }
+        else {
+
+            callback(null, new User(results[0].id, results[0].lastName, results[0].firstName, results[0].mail, results[0].isAdmin, results[0].hashedPassword))
+        }
+
+        connection.end( (err) => {
+            callback(err)
+        })
+    })
+}
+
+function findByID(id, callback) {
+
+    var connection = getConnection()
+    
+    connection.query('SELECT * FROM userTable WHERE id = ? ;', [id], (err, results) => {
+        if(err) {
+            callback(err, null)
+        }
+        else if (results[0] === undefined) {
+            callback(null, undefined)
+        }
+        else {
+            callback(null, new User(results[0].id, results[0].lastName, results[0].firstName, results[0].mail, results[0].isAdmin, results[0].hashedPassword))
+        }
+
+        connection.end( (err) => {
+            callback(err)
+        })
+    })
+}
+
+function create(user, callback) {
+    if (typeof user !== 'User') {
+        callback(new Error('wrong type, need User'))
+        return
+    }
+
+    var connection = getConnection()
+
+    connection.query('INSERT INTO userTable SET ?', user, (err, results) => {
+        if (err) {
+            callback(err)
+            return
+        }
+        callback(null)
+    })
+
+}
+
+module.exports = {
     User: User,
-    find: find
+    getConnection: getConnection,
+    findByEmail: findByEmail,
+    findByID: findByID,
+    create: create
 }
