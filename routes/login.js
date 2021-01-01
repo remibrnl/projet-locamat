@@ -24,6 +24,7 @@ router.get('/', async(req, res) =>{
 router.post('/',(req, res, next) => {
   
   connection.query("SELECT * FROM userTable WHERE mail = ? ", [req.body.mail], async(err,result) => {
+    console.log(result)
     if(err) {
       next(err)
     }

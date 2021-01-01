@@ -9,14 +9,19 @@ router.get('/', authenticateToken, (req, res) =>{
   res.render('index', { title: 'Matériel' , name: req.user.firstName});
 });
 
-// A FAIRE : Trouver un moyen de rediriger sur /login quand / donne "Unauthorized"
+// A FAIRE : Trouver un moyen de rediriger sur /login quand / donne "Unauthorized" --> fait à check ensemble 
 function authenticateToken(req, res, next) {
   const cookieToken = req.cookies 
   const token = cookieToken.token
 
-  if(token == null) return res.sendStatus(401)
-
-  jwt.verify(token.toString(), process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
+  if(token == ""){
+    return res.redirect('login')
+  } 
+  else if(token == null){
+    return res.sendStatus(401)
+  }
+  else{
+    jwt.verify(token.toString(), process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
       if (err){
         res.redirect('/login', {message: 'invalid token'})
       }
@@ -29,5 +34,7 @@ function authenticateToken(req, res, next) {
         next()
       }
   })
+  }
 }
+
 module.exports = router;

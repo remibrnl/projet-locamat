@@ -16,8 +16,17 @@
             </li>
         </ul>
     </div>
+    
+    <button  class="btn btn-outline-danger my-2 my-sm-0" id="logoutBTN">Déconnection</button>
+    <script>
+        const button = document.getElementById('logoutBTN')
+        button.addEventListener('click', (err)=>{
+            console.log("clicked")
+            document.cookie = "token=;"
+            location.reload()
+        })
 
-    <button class="btn btn-outline-danger my-2 my-sm-0">Déconnection</button>
+    </script>
 </nav>
 
 <div class="container">
