@@ -13,13 +13,8 @@ router.get('/', authenticateToken, (req, res) =>{
 function authenticateToken(req, res, next) {
   const cookieToken = req.cookies 
   const token = cookieToken.token
-
-  if(token == ""){
-    return res.redirect('login')
-  } 
-  else if(token == null){
-    return res.sendStatus(401)
-  }
+  
+  if(token == null || token=="") { return res.redirect('login')} 
   else{
     jwt.verify(token.toString(), process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
       if (err){
@@ -33,8 +28,8 @@ function authenticateToken(req, res, next) {
         req.user = decoded
         next()
       }
-  })
+    })
   }
 }
 
-module.exports = router;
+module.exports = router

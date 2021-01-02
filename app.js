@@ -11,6 +11,7 @@ var usersRouter = require('./routes/users');
 var loginRouter = require('./routes/login');
 var adminRouter = require('./routes/admin');
 var registerRouteur = require('./routes/register')
+var profileRouter = require('./routes/profile')
 
 var app = express();
 
@@ -33,11 +34,13 @@ app.use(express.static(__dirname + '/node_modules/jquery/dist'));
 app.use(express.static(__dirname + '/node_modules/bootstrap/dist'));
 
 
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/login', loginRouter);
 app.use('/admin', adminRouter);
 app.use('/register',registerRouteur);
+app.use('/profile',profileRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
