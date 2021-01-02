@@ -12,6 +12,8 @@ function getConnection() {
         })
 }
 
+// finding
+
 function findByEmail(email, callback) {
 
     var connection = getConnection();
@@ -72,6 +74,8 @@ function findByID(id, callback) {
     });
 }
 
+// creating
+
 function create(user, callback) {
     
     var connection = getConnection();
@@ -89,9 +93,23 @@ function create(user, callback) {
 
 }
 
+// removing
+
+function remove(user, callback) {
+    callback(new Error('Pas encore implémentée'));
+}
+
+// updating
+
+function update(user, callback) {
+    callback(new Error('Pas encore implémentée'));
+}
+
 module.exports = {
     getConnection: getConnection,
     findByEmail: findByEmail,
     findByID: findByID,
-    create: create
+    create: create,
+    remove: remove,
+    update: update
 }
