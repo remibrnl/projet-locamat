@@ -1,0 +1,44 @@
+<%- include('header') -%>
+<div class="class container">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#home" data-toggle="tab">Profile</a></li>
+      <li><a href="#profile" data-toggle="tab">Password</a></li>
+    </ul>
+    <div id="myTabContent" class="tab-content">
+      <div class="tab-pane active in" id="home">
+        <form action="update" method="POST">
+          <div>
+            <label>Email</label>
+            <input type="email" value=<%=user.mail%> class="input-xlarge" id="mail" name="mail">
+          </div>
+          <div>
+            <label>First Name</label>
+            <input type="text" value=<%=user.firstName%> class="input-xlarge" id="firstName" name="firstName">
+          </div>
+          <div>
+            <label>Last Name</label>
+            <input type="text" value=<%=user.lastName%> class="input-xlarge" id="lastName" name="lastName">
+          </div>  
+            <div>
+        	    <button class="btn btn-primary" type="submit">Update</button>
+        	</div>
+        </form>
+      </div>
+      <div class="tab-pane fade" id="profile">
+      <form action="changePassword" method="POST">
+        <div>
+          <label>Former password</label>
+          <input type="password" class="input-xlarg">
+        </div>
+        <div>
+          <label>New Password</label>
+          <input type="password" class="input-xlarge">
+        </div>
+        <div>
+            <button class="btn btn-primary" type="submit">Update</button>
+        </div>
+    	</form>
+      </div>
+</div>
+
+  <%- include('footer') -%>

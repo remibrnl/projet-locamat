@@ -1,44 +1,93 @@
 <%- include('header') -%>
-<div class="class container">
-    <ul class="nav nav-tabs">
-      <li class="active"><a href="#home" data-toggle="tab">Profile</a></li>
-      <li><a href="#profile" data-toggle="tab">Password</a></li>
-    </ul>
-    <div id="myTabContent" class="tab-content">
-      <div class="tab-pane active in" id="home">
-        <form action="update" method="POST">
-          <div>
-            <label>Email</label>
-            <input type="email" value=<%=user.mail%> class="input-xlarge" id="mail" name="mail">
-          </div>
-          <div>
-            <label>First Name</label>
-            <input type="text" value=<%=user.firstName%> class="input-xlarge" id="firstName" name="firstName">
-          </div>
-          <div>
-            <label>Last Name</label>
-            <input type="text" value=<%=user.lastName%> class="input-xlarge" id="lastName" name="lastName">
-          </div>  
-            <div>
-        	    <button class="btn btn-primary" type="submit">Update</button>
-        	</div>
-        </form>
-      </div>
-      <div class="tab-pane fade" id="profile">
-      <form action="changePassword" method="POST">
-        <div>
-          <label>Former password</label>
-          <input type="password" class="input-xlarg">
-        </div>
-        <div>
-          <label>New Password</label>
-          <input type="password" class="input-xlarge">
-        </div>
-        <div>
-            <button class="btn btn-primary" type="submit">Update</button>
-        </div>
-    	</form>
-      </div>
+<div class="class menu">
+    <a href="/"><button type="button" class="btn btn-primary btn-sm">Acceuil</button></a>
 </div>
+<div class="container bootstrap snippets bootdey">
+<div class="panel-body inf-content">
+    <div class="row">
+        <div class="col-md-6">
+            <strong>Information</strong><br>
+            <div class="table-responsive">
+            <table class="table table-user-information">
+                <tbody>
+                    <tr>        
+                        <td>
+                            <strong>
+                                <span class="glyphicon glyphicon-asterisk text-primary"></span>
+                                Identificacion                                                
+                            </strong>
+                        </td>
+                        <td class="text-primary">
+                            <%=user.id%>     
+                        </td>
+                    </tr>
+                    <tr>    
+                        <td>
+                            <strong>
+                                <span class="glyphicon glyphicon-user  text-primary"></span>    
+                                Name                                                
+                            </strong>
+                        </td>
+                        <td class="text-primary">
+                            <%=user.firstName%>     
+                        </td>
+                    </tr>
+                    <tr>        
+                        <td>
+                            <strong>
+                                <span class="glyphicon glyphicon-cloud text-primary"></span>  
+                                Lastname                                                
+                            </strong>
+                        </td>
+                        <td class="text-primary">
+                            <%=user.lastName%>  
+                        </td>
+                    </tr>
 
-  <%- include('footer') -%>
+                    <tr>        
+                        <td>
+                            <strong>
+                                <span class="glyphicon glyphicon-eye-open text-primary"></span> 
+                                Role                                                
+                            </strong>
+                        </td>
+                        <td class="text-primary">
+                            <%if(user.isAdmin == true) {%>
+                                administrator
+                            <%} else { %>
+                                user
+                            <% } %>
+                        </td>
+                    </tr>
+                    <tr>        
+                        <td>
+                            <strong>
+                                <span class="glyphicon glyphicon-envelope text-primary"></span> 
+                                Email                                                
+                            </strong>
+                        </td>
+                        <td class="text-primary">
+                            <%=user.mail%> 
+                        </td>
+                    </tr>                           
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<button class="btn btn-primary" data-toggle="modal" data-target="#updateUserModal">update</button>
+<button class="btn btn-primary" data-toggle="modal" data-target="#changePasswordModal">change password</button>
+
+<%- include('password_change_popup.ejs') -%>
+
+<%- include('update_user_popup.ejs') -%>
+
+
+<footer class="footer mt-auto py-3">
+    <div class="container">
+        <span class="text-muted">Locamat, 2020</span>
+    </div>
+</footer>
+<%- include('footer') -%>                                 

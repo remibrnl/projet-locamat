@@ -28,7 +28,6 @@ router.get('/',authenticateToken,(req,res) =>{
                 lastName: result[0].lastName, 
                 firstName: result[0].firstName,
                 mail: result[0].mail,
-                isAdmin: result[0].isAdmin
             }
     
             //res.user = user
@@ -38,14 +37,14 @@ router.get('/',authenticateToken,(req,res) =>{
     })
 })
 
+
 router.post('/',(req,res)=>{
-    var user = {
-        name: req.body.firstName,
-        lastName: req.body.lastName,
-        mail: req.body.mail
-    }
-    console.log(user)
-    res.json(user)
+    if(req.param('action')==='update') res.send('profile update form')
+    else res.send('password update form')
+    /*connection.query("UPDATE usertable SET mail 1 = ? , firstName = ? , lastName ?",[req.body.mail, req.body.firstName, req.body.lastName],(err,result)=>{
+        
+    }*/
+    //res.send('profile update form')
 })
 
 function authenticateToken(req, res, next) {
@@ -69,4 +68,6 @@ function authenticateToken(req, res, next) {
       })
     }
   }
-module.exports = router 
+
+
+module.exports = router
