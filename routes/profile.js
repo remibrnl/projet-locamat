@@ -2,6 +2,7 @@ var express = require('express')
 var router = express.Router()
 var mysql = require('mysql')
 var jwt = require('jsonwebtoken')
+var bcrypt = require('bcrypt')
 
 var connection = mysql.createConnection({
     host: 'localhost',
@@ -31,21 +32,44 @@ router.get('/',authenticateToken,(req,res) =>{
                 isAdmin: result[0].isAdmin
             }
     
-            //res.user = user
             res.render('profile',{title: 'Locamat : User profile', user: user})
         }
         
     })
 })
 
-router.post('/',(req,res)=>{
-    var user = {
-        name: req.body.firstName,
-        lastName: req.body.lastName,
-        mail: req.body.mail
+router.post('/updateUser',authenticateToken,(req,res)=>{
+  if(req.body.firstName != '') var firstName = req.body.firstName 
+  else var firstName = req.user.firstName
+  if(req.body.lastName != '') var lastName = req.body.lastName
+  else var lastName = req.user.lastName
+  if(req.body.mail != '') var mail = req.body.mail
+  else var mail = req.user.mail
+  connection.query("UPDATE usertable SET firstName = ? , lastName = ? , mail = ?  WHERE id = ? ; ", [firstName,lastName,mail,req.user.id],(err,result)=>{
+    if(result == null){
+      console.log(result)
+      res.sendStatus(404)    
     }
-    console.log(user)
-    res.json(user)
+    else{
+      res.redirect('/profile')
+    }
+  })
+})
+
+router.post('/passwordChange',authenticateToken, async(req,res)=>{
+  console.log(req.user.id)
+  if(await bcrypt.compare(req.body.formerPassword,req.user.password)){
+    var newHashedPassword = await bcrypt.hash(req.body.newPassword,10)
+    connection.query("UPDATE usertable SET hashedPassword = ? WHERE id = ? ; ", [newHashedPassword,req.user.id],(err,result)=>{
+      if(result == null){
+        console.log(result)
+        res.sendStatus(404)    
+      }
+      else{
+        res.redirect('/profile')
+      }
+    })
+  }
 })
 
 function authenticateToken(req, res, next) {

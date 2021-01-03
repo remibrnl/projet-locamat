@@ -29,6 +29,16 @@
 	</div>
 </nav>
 
+<script>
+    const button = document.getElementById('logoutBTN')
+    button.addEventListener('click', (err)=>{
+        console.log("clicked")
+        document.cookie="token="
+        location.reload()
+    })
+
+</script>
+
 <div class="container">
 
     <div class="panel-body inf-content">
@@ -110,9 +120,11 @@
 
 </div> <!-- /container-->
 
-<%- include('password_change_popup.ejs') -%>
+<div><%- include('update_user_popup.ejs') -%></div>
+<div><%- include('password_change_popup.ejs') -%></div>
 
-<%- include('update_user_popup.ejs') -%>
+
+
 
 
 <footer class="footer mt-auto py-3">
