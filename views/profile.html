@@ -1,84 +1,114 @@
 <%- include('header') -%>
-<div class="class menu">
-    <a href="/"><button type="button" class="btn btn-primary btn-sm">Acceuil</button></a>
-</div>
-<div class="container bootstrap snippets bootdey">
-<div class="panel-body inf-content">
-    <div class="row">
-        <div class="col-md-6">
-            <strong>Information</strong><br>
-            <div class="table-responsive">
-            <table class="table table-user-information">
-                <tbody>
-                    <tr>        
-                        <td>
-                            <strong>
-                                <span class="glyphicon glyphicon-asterisk text-primary"></span>
-                                Identificacion                                                
-                            </strong>
-                        </td>
-                        <td class="text-primary">
-                            <%=user.id%>     
-                        </td>
-                    </tr>
-                    <tr>    
-                        <td>
-                            <strong>
-                                <span class="glyphicon glyphicon-user  text-primary"></span>    
-                                Name                                                
-                            </strong>
-                        </td>
-                        <td class="text-primary">
-                            <%=user.firstName%>     
-                        </td>
-                    </tr>
-                    <tr>        
-                        <td>
-                            <strong>
-                                <span class="glyphicon glyphicon-cloud text-primary"></span>  
-                                Lastname                                                
-                            </strong>
-                        </td>
-                        <td class="text-primary">
-                            <%=user.lastName%>  
-                        </td>
-                    </tr>
 
-                    <tr>        
-                        <td>
-                            <strong>
-                                <span class="glyphicon glyphicon-eye-open text-primary"></span> 
-                                Role                                                
-                            </strong>
-                        </td>
-                        <td class="text-primary">
-                            <%if(user.isAdmin == true) {%>
-                                administrator
-                            <%} else { %>
-                                user
-                            <% } %>
-                        </td>
-                    </tr>
-                    <tr>        
-                        <td>
-                            <strong>
-                                <span class="glyphicon glyphicon-envelope text-primary"></span> 
-                                Email                                                
-                            </strong>
-                        </td>
-                        <td class="text-primary">
-                            <%=user.mail%> 
-                        </td>
-                    </tr>                           
-                </tbody>
-            </table>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	<a class="navbar-brand" href="/">Locmat</a>
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+
+	<div class="collapse navbar-collapse">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item">
+				<a href=".." class="nav-link">Matériel </a>
+			</li>
+			<li class="nav-item">
+				<a href="admin" class="nav-link">Administration</a>
+			</li>
+			<li class="nav-item active">
+				<a href="profile" class="nav-link">Profil <span class="sr-only">(actuel)</span></a>
+			</li>
+		</ul>
+
+		<span class="navbar-text navbar-username-text">
+            <%= user.firstName %> <%= user.lastName %>
+        </span>
+        <form class="form-inline">
+            <button  class="btn btn-outline-danger my-2 my-sm-0" id="logoutBTN">Déconnection</button>
+		</form>
+		
+	</div>
+</nav>
+
+<div class="container">
+
+    <div class="panel-body inf-content">
+        <div class="row">
+            <div class="col-md-6">
+                <strong>Information</strong><br>
+                <div class="table-responsive">
+                    <table class="table table-user-information">
+                    <tbody>
+                        <tr>        
+                            <td>
+                                <strong>
+                                    <span class="glyphicon glyphicon-asterisk text-primary"></span>
+                                    Identificacion                                                
+                                </strong>
+                            </td>
+                            <td class="text-primary">
+                                <%=user.id%>     
+                            </td>
+                        </tr>
+                        <tr>    
+                            <td>
+                                <strong>
+                                    <span class="glyphicon glyphicon-user  text-primary"></span>    
+                                    Name                                                
+                                </strong>
+                            </td>
+                            <td class="text-primary">
+                                <%=user.firstName%>     
+                            </td>
+                        </tr>
+                        <tr>        
+                            <td>
+                                <strong>
+                                    <span class="glyphicon glyphicon-cloud text-primary"></span>  
+                                    Lastname                                                
+                                </strong>
+                            </td>
+                            <td class="text-primary">
+                                <%=user.lastName%>  
+                            </td>
+                        </tr>
+
+                        <tr>        
+                            <td>
+                                <strong>
+                                    <span class="glyphicon glyphicon-eye-open text-primary"></span> 
+                                    Role                                                
+                                </strong>
+                            </td>
+                            <td class="text-primary">
+                                <%if(user.isAdmin == true) {%>
+                                    administrator
+                                <%} else { %>
+                                    user
+                                <% } %>
+                            </td>
+                        </tr>
+                        <tr>        
+                            <td>
+                                <strong>
+                                    <span class="glyphicon glyphicon-envelope text-primary"></span> 
+                                    Email                                                
+                                </strong>
+                            </td>
+                            <td class="text-primary">
+                                <%=user.mail%> 
+                            </td>
+                        </tr>                           
+                    </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
-</div>
+
 <button class="btn btn-primary" data-toggle="modal" data-target="#updateUserModal">update</button>
 <button class="btn btn-primary" data-toggle="modal" data-target="#changePasswordModal">change password</button>
+
+</div> <!-- /container-->
 
 <%- include('password_change_popup.ejs') -%>
 
@@ -90,4 +120,5 @@
         <span class="text-muted">Locamat, 2020</span>
     </div>
 </footer>
+
 <%- include('footer') -%>                                 

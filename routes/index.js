@@ -6,7 +6,7 @@ var jwt = require('jsonwebtoken');
 
 /* GET home page. */
 router.get('/', authenticateToken, (req, res) =>{
-  res.render('index', { title: 'Matériel' , name: req.user.firstName});
+  res.render('index', { title: 'Matériel' , user: req.user});
 });
 
 // A FAIRE : Trouver un moyen de rediriger sur /login quand / donne "Unauthorized" --> fait à check ensemble 
