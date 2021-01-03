@@ -11,9 +11,11 @@
 			<li class="nav-item">
 				<a href=".." class="nav-link">Matériel </a>
 			</li>
-			<li class="nav-item">
-				<a href="admin" class="nav-link">Administration</a>
-			</li>
+			<% if(user.isAdmin ==true) {%> 
+                <li class="nav-item">
+                    <a href="admin" class="nav-link">Administration</a>
+                </li>
+            <% } %>
 			<li class="nav-item active">
 				<a href="profile" class="nav-link">Profil <span class="sr-only">(actuel)</span></a>
 			</li>
@@ -28,16 +30,6 @@
 		
 	</div>
 </nav>
-
-<script>
-    const button = document.getElementById('logoutBTN')
-    button.addEventListener('click', (err)=>{
-        console.log("clicked")
-        document.cookie="token="
-        location.reload()
-    })
-
-</script>
 
 <div class="container">
 
@@ -132,5 +124,15 @@
         <span class="text-muted">Locamat, 2020</span>
     </div>
 </footer>
+
+<script>
+    const button = document.getElementById('logoutBTN')
+    button.addEventListener('click', (err)=>{
+        console.log("clicked")
+        document.cookie="token="
+        location.reload()
+    })
+
+</script>
 
 <%- include('footer') -%>                                 

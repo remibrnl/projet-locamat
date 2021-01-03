@@ -11,9 +11,11 @@
             <li class="nav-item active">
                 <a href="" class="nav-link">Matériel <span class="sr-only">(actuel)</span></a>
             </li>
-            <li class="nav-item">
-                <a href="admin" class="nav-link">Administration</a>
-            </li>
+            <% if(user.isAdmin ==true) {%> 
+                <li class="nav-item">
+                    <a href="admin" class="nav-link">Administration</a>
+                </li>
+            <% } %>
             <li class="nav-item">
                 <a href="profile" class="nav-link">
                     Profil
