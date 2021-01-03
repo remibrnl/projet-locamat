@@ -1,6 +1,8 @@
-var user = require('../db/user.js');
-var expect = require('chai').expect;
 var assert = require('chai').assert;
+//var expect = require('chai').expect;
+
+var user = require('../db/users.js');
+var getConnection = require('../db/connectionTools.js').getConnection;
 
 // Mysql server connection object
 var connection;
@@ -30,7 +32,7 @@ describe('db/user.js', () => {
 
     // Before and after all tests : openning and closing mysql server connection
     before((done) => {
-        connection = user.getConnection();
+        connection = getConnection();
         done();
     })
     after((done) => {
@@ -169,7 +171,7 @@ describe('db/user.js', () => {
                 // verifying the dummy is not longer in the database
                 connection.query('SELECT * FROM userTable WHERE id = ? ;', dummyUser.id, (err, results) => {
                     try {
-                        expect(results[0]).to.be.empty('the dummy is not longer in the database');
+                        assert.equal(results[0], undefined, 'the dummy is not longer in the database');
                         done();
                     }
                     catch (err) {
@@ -189,7 +191,7 @@ describe('db/user.js', () => {
         afterEach(removeDummy);
 
         it('update()', (done) => {
-            updatedDummyUser = dummyUser;
+            updatedDummyUser = Object.assign({}, dummyUser);
             // Never change the id
             updatedDummyUser.isAdmin = 0;
 

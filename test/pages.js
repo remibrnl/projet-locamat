@@ -12,14 +12,27 @@ describe('Pages answers', () => {
     });
     */
 
-    /*
+    
     it('responds to /', (done) => {
         request(server)
         .get('/')
-        .expect(200, done)
+        .expect(302, done)
+        // 302 found because it redirects to /login
     })
-    */
-
+    /*
+    it('responds to /admin', (done) => {
+        request(server)
+        .get('/admin')
+        .expect(302, done)
+        // 302 found because it redirects to /login
+    })
+*/
+    it('responds to /profile', (done) => {
+        request(server)
+        .get('/profile')
+        .expect(302, done)
+        // 302 found because it redirects to /login
+    })
 
     it('reponds to /login', (done) => {
         request(server)

@@ -3,14 +3,7 @@ require('dotenv').config();
 var express = require('express');
 var mysql = require('mysql');
 
-function getConnection() {
-    return connection = mysql.createConnection({
-            host: 'localhost',
-            user: 'root',
-            password: '',
-            database: 'locamat'
-        })
-}
+var getConnection = require('./connectionTools.js').getConnection;
 
 // finding
 
@@ -80,7 +73,7 @@ function create(user, callback) {
     
     var connection = getConnection();
 
-    connection.query('INSERT INTO userTable SET ?', user, (err, results) => {
+    connection.query('INSERT INTO userTable SET ? ;', user, (err, results) => {
         if (err) {
             callback(err);
             return;
@@ -96,13 +89,38 @@ function create(user, callback) {
 // removing
 
 function remove(user, callback) {
-    callback(new Error('Pas encore implémentée'));
+    
+    var connection = getConnection();
+
+    connection.query('DELETE FROM userTable WHERE id = ? ;', user.id, (err) => {
+        if (err) {
+            callback(err);
+            return;
+        }
+        
+        connection.end(() => {
+            callback(null);
+        })
+
+    })
 }
 
 // updating
 
 function update(user, callback) {
-    callback(new Error('Pas encore implémentée'));
+    
+    var connection = getConnection();
+
+    connection.query('UPDATE userTable SET ? WHERE id = ? ;', [user, user.id], (err, results) => {
+        if (err) {
+            callback(err);
+            return;
+        }
+
+        connection.end(() => {
+            callback(null);
+        })
+    })
 }
 
 module.exports = {

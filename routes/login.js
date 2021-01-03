@@ -6,7 +6,7 @@ var jwt = require('jsonwebtoken');
 var mysql = require('mysql');
 var bcrypt = require('bcrypt');
 
-var user = require('../db/user.js')
+var user = require('../db/users.js')
 
 
 var connection = mysql.createConnection({

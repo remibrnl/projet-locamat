@@ -6,7 +6,7 @@
     "start": "node ./bin/www",
     "auth": "nodemon authServer.js",
     "test": "mocha --exit",
-    "coverage": "nyc npm test"
+    "coverage": "nyc mocha --exit"
   },
   "dependencies": {
     "bcrypt": "^5.0.0",
