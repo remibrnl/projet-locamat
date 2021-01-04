@@ -1,0 +1,28 @@
+mail:					password:
+
+lewis.hamilton@mercedes.com		password1
+valtteri.bottas@mercedes.com		password2
+charles.leclerc@ferrari.com		password3
+carlos.sainz@ferrari.com		password4
+max.verstappen@redbull.com		password5
+sergio.perez@redbull.com		password6
+daniel.ricciardo@mclaren.com		password7
+lando.norris@mclaren.com		password8
+esteban.ocon@alpine.com			password9
+fernando.alonso@alpine.com		password10
+sebastian.vettel@aston-martin.com	password11
+lance.stroll@aston-martin.com		password12
+pierre.gasly@alphaTauri.com		password13
+yuki.tsunoda@alphaTauri.com		password14
+kimi.raikkonen@alpha-romeo.com		password15
+antonio.giovinazzi@alpha-romeo.com	password16
+mick.schumacher@haas.com		password17
+nikita.mazepin@haas.com			password18
+george.russell@williams.com		password19
+nicholas.latifi@williams.com		password20
+
+
+
+
+
+
