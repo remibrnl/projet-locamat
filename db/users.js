@@ -18,7 +18,7 @@ function findByEmail(email, callback) {
         }
         
         if (results[0] === undefined) {
-            callback(new Error('user not found in database'), null);
+            callback(new Error('user was not found in the database'), null);
             return;
         }
 
@@ -34,7 +34,7 @@ function findByEmail(email, callback) {
         connection.end(() => {
             callback(null, user);
         });
-    })
+    });
 }
 
 function findByID(id, callback) {
@@ -48,7 +48,7 @@ function findByID(id, callback) {
         }
 
         if (results[0] === undefined) {
-            callback(new Error('user not found in database'), null);
+            callback(new Error('user was not found in the database'), null);
             return;
         }
 

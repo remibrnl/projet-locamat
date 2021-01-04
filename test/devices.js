@@ -19,11 +19,13 @@ var dummyUser = {
 var dummyDevice = {
     ref: 4594132,
     name: 'iPhone 12 Pro',
-    version: '2',
+    version: 2,
     pictureUrl: 'img/phones/apple-iphone12-pro.png',
     borrowerID: dummyUser.id,
-    borrowingStartDate: '2021-01-01 12:30:00.000000',
-    borrowingEndDate: '2021-01-10 15:00:00.000000'
+    borrowingStartDate: new Date('2021-01-01 12:30:00.000000'),
+    borrowingEndDate: new Date('2021-01-01 12:30:00.000000')
+    //borrowingStartDate: '2021-01-01 12:30:00.000000',
+    //borrowingEndDate: '2021-01-10 15:00:00.000000'
 };
 
 // Dummy device manual insertion
@@ -71,9 +73,9 @@ describe('db/devices.js', () => {
         after(removeDummyDevice);
 
 
-        it.skip('findByID()', (done) => {
+        it('findByRef()', (done) => {
 
-            devices.findByID(dummyDevice.ref, (err, result) => {
+            devices.findByRef(dummyDevice.ref, (err, result) => {
                 
                 if (err) {
                     done(err);
