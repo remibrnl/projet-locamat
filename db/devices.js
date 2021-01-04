@@ -30,8 +30,6 @@ function update(device, callback) {
 }
 
 module.exports = {
-    getConnection: getConnection,
-    findByEmail: findByEmail,
     findByID: findByID,
     create: create,
     remove: remove,

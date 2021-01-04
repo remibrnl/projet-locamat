@@ -1,3 +1,3 @@
 @echo off
-call npm run test
+call npm run coverage
 pause

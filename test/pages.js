@@ -19,14 +19,14 @@ describe('Pages answers', () => {
         .expect(302, done)
         // 302 found because it redirects to /login
     })
-    /*
-    it('responds to /admin', (done) => {
+    
+    it.skip('responds to /admin', (done) => {
         request(server)
         .get('/admin')
         .expect(302, done)
         // 302 found because it redirects to /login
     })
-*/
+
     it('responds to /profile', (done) => {
         request(server)
         .get('/profile')

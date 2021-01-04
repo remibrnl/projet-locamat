@@ -36,13 +36,7 @@ describe('db/user.js', () => {
         done();
     })
     after((done) => {
-        connection.end( (err) => {
-            if (err) {
-                done(err);
-                return;
-            }
-            done();
-        } )
+        connection.end(done);
     })
 
     describe('finding', () => {
@@ -54,7 +48,7 @@ describe('db/user.js', () => {
 
         it('findByEmail()', (done) => {
 
-            user.findByEmail('johndoe@mail.fr', (err, result) => {
+            user.findByEmail(dummyUser.mail, (err, result) => {
                 
                 if (err) {
                     done(err);
@@ -74,7 +68,7 @@ describe('db/user.js', () => {
 
         it('findByID()', (done) => {
 
-            user.findByID(21700359, (err, result) => {
+            user.findByID(dummyUser.id, (err, result) => {
                 
                 if (err) {
                     done(err);
