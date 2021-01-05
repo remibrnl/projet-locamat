@@ -50,7 +50,7 @@
                 <label for="floatingInput">User id : </label>
             </div>
             <div>
-                <input type="search" placeholder="JD01999" aria-label="Search" width="50px" height="100px">
+                <input type="text" placeholder="JD01999" id="id" name="id" width="50px" height="100px">
                     <button class="sumbit" className="btn btn-link">
                         <i class="fa fa-search" aria-hidden="true"></i>
                     </button>
@@ -83,16 +83,18 @@
 				<tbody>
                     <!--add if condition user-->
 					<!-- A FAIRE EN EXPRESS-->
-					<!-- listes des utilisateurs-->
-					<tr>
-						<td>a</td>
-						<td>a</td>
-						<td>a</td>
-						<td>a</td>
-						<td>a</td>
-						<td><button class="btn btn-outline-info" data-toggle="modal" data-target="#userBorrowedDevicesModal">Matériels empruntés</button></td>
-						<td><button class="btn btn-outline-info" data-toggle="modal" data-target="#userEditionModal">Modifier</button></td>
-					</tr>
+                    <!-- listes des utilisateurs-->
+                    <% if(searchUser != undefined) { %>
+                        <tr>
+                            <td><%= searchUser.lastName %></td>
+                            <td><%= searchUser.fisrtName %></td>
+                            <td><%= searchUser.mail %></td>
+                            <td><%= searchUser.id %></td>
+                            <td>todo</td>
+                            <td><button class="btn btn-outline-info" data-toggle="modal" data-target="#userBorrowedDevicesModal">Matériels empruntés</button></td>
+                            <td><button class="btn btn-outline-info" data-toggle="modal" data-target="#userEditionModal">Modifier</button></td>
+                        </tr>
+                    <% } %>
 					<!-- FIN DE A FAIRE EN EXPRESS-->
 				</tbody>
 			</table>
