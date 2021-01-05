@@ -40,19 +40,53 @@ function findByRef(ref, callback) {
 // creating
 
 function create(device, callback) {
-    callback(new Error('pas encore implémentée'));
+    var connection = getConnection();
+
+    connection.query('INSERT INTO deviceTable SET ? ;', device, (err, results) => {
+        if (err) {
+            callback(err);
+            return;
+        }
+        
+        connection.end(() => {
+            callback(null);
+        })
+    })
 }
 
 // removing
 
 function remove(device, callback) {
-    callback(new Error('pas encore implémentée'));
+    var connection = getConnection();
+
+    connection.query('DELETE FROM deviceTable WHERE ref = ? ;', device.ref, (err) => {
+        if (err) {
+            callback(err);
+            return;
+        }
+        
+        connection.end(() => {
+            callback(null);
+        })
+
+    })
 }
 
 // updating
 
 function update(device, callback) {
-    callback(new Error('pas encore implémentée'));
+    var connection = getConnection();
+
+    connection.query('UPDATE deviceTable SET ? WHERE ref = ? ;', [device, device.ref], (err, results) => {
+        if (err) {
+            callback(err);
+            return;
+        }
+
+        connection.end(() => {
+            callback(null);
+        })
+    })
 }
 
 module.exports = {

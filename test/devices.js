@@ -105,7 +105,7 @@ describe('db/devices.js', () => {
             else done();
         });
 
-        it.skip('create()', (done) => {
+        it('create()', (done) => {
             
             devices.create(dummyDevice, (err, results) => {
                 
@@ -163,7 +163,7 @@ describe('db/devices.js', () => {
             }
         })
 
-        it.skip('remove()', (done) => {
+        it('remove()', (done) => {
             devices.remove(dummyDevice, (err) => {
                 if (err) {
                     done(err);
@@ -192,10 +192,10 @@ describe('db/devices.js', () => {
         // Deletion of the dummy after each updating tests
         afterEach(removeDummyDevice);
 
-        it.skip('update()', (done) => {
+        it('update()', (done) => {
             updatedDummyDevice = Object.assign({}, dummyDevice);
             // Never change the ref
-            updatedDummyDevice.isAdmin = 0;
+            updatedDummyDevice.version = 3;
 
             devices.update(updatedDummyDevice, (err) => {
                 if (err) {
