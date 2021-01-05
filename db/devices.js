@@ -37,6 +37,10 @@ function findByRef(ref, callback) {
     });
 }
 
+function findAll(callback) {
+    callback();
+}
+
 // creating
 
 function create(device, callback) {
@@ -91,6 +95,7 @@ function update(device, callback) {
 
 module.exports = {
     findByRef: findByRef,
+    findAll: findAll,
     create: create,
     remove: remove,
     update: update

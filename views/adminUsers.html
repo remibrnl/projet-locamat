@@ -1,4 +1,5 @@
 <%- include('header') -%>
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="/">Locmat</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -8,8 +9,9 @@
     <div class="collapse navbar-collapse">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a href="" class="nav-link">Matériel <span class="sr-only">(actuel)</span></a>
+                <a href="/" class="nav-link">Matériel</a>
             </li>
+
             <% if(user.isAdmin ==true) {%> 
                 <li class="nav-item dropdown active">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -17,13 +19,14 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                       <p>
-                          <a class="dropdown-item" href="adminUsers">users</a> 
+                          <a class="dropdown-item" active href="">users <span class="sr-only">(actuel)</span></a> 
                           <a class="dropdown-item" href="adminDevices">devices</a>
                       </p>
                       
                     </div>
                   </li>
             <% } %>
+
             <li class="nav-item">
                 <a href="profile" class="nav-link">
                     Profil
@@ -47,14 +50,22 @@
     <div class="user-admin-action">
         <h2><%= message %></h2>
         <form action="/adminUsers" method="POST">
-            <div>
+            <!--<div>
                 <label for="floatingInput">User id : </label>
-            </div>
-            <div>
+            </div>-->
+            <!--<div>
                 <input type="text" placeholder="JD01999" id="id" name="id" width="50px" height="100px">
-                    <button class="sumbit" className="btn btn-link">
-                        <i class="fa fa-search" aria-hidden="true"></i>
-                    </button>
+                <button class="sumbit" className="btn btn-link">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </button>
+            </div>-->
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">User ID</span>
+                </div>
+                <input type="number" placeholder="JD01999" id="id" name="id">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-success submit" type="button">Rechercher</button>
                 </div>
             </div>
         </form>
@@ -106,7 +117,7 @@
                     <% } else { %>
                         <tbody>
                             <%= userList.lenght %>
-                            <% for(var i=0 ; i < userList.length ; i++) {%>
+                            <% for(let i=0 ; i < userList.length ; i++) {%>
                                 <tr>
                                     <td><%= userList[i].lastName %></td>
                                     <td><%= userList[i].firstName %></td>

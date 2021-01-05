@@ -92,6 +92,10 @@ describe('db/devices.js', () => {
             });
         });
 
+        it.skip('findAll()', (done) => {
+            
+        })
+
     });
 
     describe('creating', () => {

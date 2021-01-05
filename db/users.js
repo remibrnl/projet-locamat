@@ -82,7 +82,7 @@ function findAll(callback) {
             return;
         }
         var userList = []
-        for(var i = 0 ; i < results.length ; i++){
+        for(let i = 0 ; i < results.length ; i++){
             var user = {
                 id: results[i].id,
                 lastName: results[i].lastName,
@@ -158,7 +158,6 @@ function update(user, callback) {
 }
 
 module.exports = {
-    getConnection: getConnection,
     findByEmail: findByEmail,
     findByID: findByID,
     findAll: findAll,
