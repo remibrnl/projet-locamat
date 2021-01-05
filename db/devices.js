@@ -12,12 +12,12 @@ function findByRef(ref, callback) {
     
     connection.query('SELECT * FROM deviceTable WHERE ref = ? ;', [ref], (err, results) => {
         if(err) {
-            callback(err, null);
+            callback(err);
             return;
         }
         
         if (results[0] === undefined) {
-            callback(new Error('ref was not found in the database'), null);
+            callback(new Error('ref was not found in the database'));
             return;
         }
 
@@ -49,7 +49,7 @@ function create(device, callback) {
         }
         
         connection.end(() => {
-            callback(null);
+            callback();
         })
     })
 }
@@ -66,7 +66,7 @@ function remove(device, callback) {
         }
         
         connection.end(() => {
-            callback(null);
+            callback();
         })
 
     })
@@ -84,7 +84,7 @@ function update(device, callback) {
         }
 
         connection.end(() => {
-            callback(null);
+            callback();
         })
     })
 }

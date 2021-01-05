@@ -13,12 +13,12 @@ function findByEmail(email, callback) {
     
     connection.query('SELECT * FROM userTable WHERE mail = ? ;', [email], (err, results) => {
         if(err) {
-            callback(err, null);
+            callback(err);
             return;
         }
         
         if (results[0] === undefined) {
-            callback(new Error('user was not found in the database'), null);
+            callback(new Error('user was not found in the database'));
             return;
         }
 
@@ -43,12 +43,12 @@ function findByID(id, callback) {
     
     connection.query('SELECT * FROM userTable WHERE id = ? ;', [id], (err, results) => {
         if(err) {
-            callback(err, null);
+            callback(err);
             return;
         }
 
         if (results[0] === undefined) {
-            callback(new Error('user was not found in the database'), null);
+            callback(new Error('user was not found in the database'));
             return;
         }
 
@@ -80,7 +80,7 @@ function create(user, callback) {
         }
         
         connection.end(() => {
-            callback(null);
+            callback();
         })
     })
 
@@ -99,7 +99,7 @@ function remove(user, callback) {
         }
         
         connection.end(() => {
-            callback(null);
+            callback();
         })
 
     })
@@ -118,7 +118,7 @@ function update(user, callback) {
         }
 
         connection.end(() => {
-            callback(null);
+            callback();
         })
     })
 }
