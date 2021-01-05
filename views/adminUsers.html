@@ -45,6 +45,7 @@
 
 <div class="container">
     <div class="user-admin-action">
+        <h2><%= message %></h2>
         <form action="/adminUsers" method="POST">
             <div>
                 <label for="floatingInput">User id : </label>
@@ -80,21 +81,50 @@
 						<th class="col"></th>
 					</tr>
 				</thead>
-				<tbody>
+				
                     <!--add if condition user-->
 					<!-- A FAIRE EN EXPRESS-->
                     <!-- listes des utilisateurs-->
                     <% if(searchUser != undefined) { %>
-                        <tr>
-                            <td><%= searchUser.lastName %></td>
-                            <td><%= searchUser.fisrtName %></td>
-                            <td><%= searchUser.mail %></td>
-                            <td><%= searchUser.id %></td>
-                            <td>todo</td>
-                            <td><button class="btn btn-outline-info" data-toggle="modal" data-target="#userBorrowedDevicesModal">Matériels empruntés</button></td>
-                            <td><button class="btn btn-outline-info" data-toggle="modal" data-target="#userEditionModal">Modifier</button></td>
-                        </tr>
-                    <% } %>
+                        <tbody>
+                            <tr>
+                                <td><%= searchUser.lastName %></td>
+                                <td><%= searchUser.firstName %></td>
+                                <td><%= searchUser.mail %></td>
+                                <td><%= searchUser.id %></td>
+                                <<td>
+                                    <% if(searchUser.isAdmin == 1) {%>
+                                        Administrateur
+                                    <% } else { %>
+                                        Emprunteur
+                                    <% } %>
+                                </td>
+                                <td><button class="btn btn-outline-info" data-toggle="modal" data-target="#userBorrowedDevicesModal">Matériels empruntés</button></td>
+                                <td><button class="btn btn-outline-info" data-toggle="modal" data-target="#userEditionModal">Modifier</button></td>
+                            </tr>
+                        <tbody>
+                    <% } else { %>
+                        <tbody>
+                            <%= userList.lenght %>
+                            <% for(var i=0 ; i < userList.length ; i++) {%>
+                                <tr>
+                                    <td><%= userList[i].lastName %></td>
+                                    <td><%= userList[i].firstName %></td>
+                                    <td><%= userList[i].mail %></td>
+                                    <td><%= userList[i].id %></td>
+                                    <td>
+                                        <% if(userList[i].isAdmin == 1) {%>
+                                            Administrateur
+                                        <% } else { %>
+                                            Emprunteur
+                                        <% } %>
+                                    </td>
+                                    <td><button class="btn btn-outline-info" data-toggle="modal" data-target="#userBorrowedDevicesModal">Matériels empruntés</button></td>
+                                    <td><button class="btn btn-outline-info" data-toggle="modal" data-target="#userEditionModal">Modifier</button></td>
+                                </tr>
+                            <% } %>
+                        </tbody>
+                    <% } %>    
 					<!-- FIN DE A FAIRE EN EXPRESS-->
 				</tbody>
 			</table>
@@ -104,6 +134,9 @@
 
 <!-- NEW USER CREATION POPUP/MODAL -->
 <%- include('user_creation_popup.ejs') -%>
+
+<!-- USER BORROWED DEVICES LIST POPUP/MODAL -->
+<%- include('user_borrowed_list_popup.ejs') -%>
 
 <script>
     const button = document.getElementById('logoutBTN')

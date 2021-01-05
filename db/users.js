@@ -67,6 +67,40 @@ function findByID(id, callback) {
     });
 }
 
+function findAll(callback) {
+
+    var connection = getConnection();
+    
+    connection.query('SELECT * FROM userTable ;', (err, results) => {
+        if(err) {
+            callback(err);
+            return;
+        }
+        
+        if (results === null) {
+            callback(new Error('User table is empty in the database'));
+            return;
+        }
+        var userList = []
+        for(var i = 0 ; i < results.length ; i++){
+            var user = {
+                id: results[i].id,
+                lastName: results[i].lastName,
+                firstName: results[i].firstName,
+                mail: results[i].mail,
+                isAdmin: results[i].isAdmin,
+                hashedPassword: results[i].hashedPassword
+            };
+            userList.push(user)
+        }
+        
+        
+        connection.end(() => {
+            callback(null, userList);
+        });
+    });
+}
+
 // creating
 
 function create(user, callback) {
@@ -127,6 +161,7 @@ module.exports = {
     getConnection: getConnection,
     findByEmail: findByEmail,
     findByID: findByID,
+    findAll: findAll,
     create: create,
     remove: remove,
     update: update

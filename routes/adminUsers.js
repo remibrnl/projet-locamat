@@ -4,31 +4,37 @@ var router = express.Router()
 var jwt = require('jsonwebtoken')
 var users = require('../db/users.js')
 
-
-/*var connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'locamat'
-})*/
-
 router.get('/',authenticateToken,(req,res)=>{
-  res.render('adminUsers',{ title: 'Locamat : Users administration', user: req.user , postRequest: req.postRequest, searchUser: req.searchUser})
-})
-
-router.post('/',authenticateToken,(req,res)=>{
-  var postRequest = true
-  users.findByID(req.body.id, (err, user) => {
+  users.findAll((err, userList) => {
     if (err) {
       throw err
     }
-    console.log('POST')
-    if(user==null){
-      var message = 'wrong user id'
-      console.log('user not found')
+    else{
+      res.render('adminUsers',{ title: 'Locamat : Users administration', user: req.user , searchUser: req.searchUser, userList: userList, message:''})
+    }
+  })
+})
+
+router.post('/',authenticateToken,(req,res)=>{
+  users.findAll((err, userList) => {
+    if (err) {
+      throw err
+    }
+   
+    if(req.body.id == '') {
+      res.render('adminUsers',{title: 'Locamat : Users administration', searchUser: req.searchUser, message: '', user: req.user, userList: userList})
     }
     else{
-      res.render('adminUsers',{title: 'Locamat : Users administration', searchUser: user, message: message, user: req.user, postRequest: postRequest})
+      users.findByID(req.body.id, (err, user) => {
+        if (err) {
+          var message = 'wrong user id'
+          res.render('adminUsers',{title: 'Locamat : Users administration', searchUser: undefined, message: message, user: req.user, userList: userList})
+        }
+        else{
+          console.log(user)
+          res.render('adminUsers',{title: 'Locamat : Users administration', searchUser: user, message: message, user: req.user, userList: userList})
+        }
+      })
     }
   })
 })
