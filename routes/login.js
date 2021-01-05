@@ -6,7 +6,7 @@ var jwt = require('jsonwebtoken');
 var mysql = require('mysql');
 var bcrypt = require('bcrypt');
 
-var user = require('../db/users.js')
+var users = require('../db/users.js')
 
 
 var connection = mysql.createConnection({
@@ -21,8 +21,40 @@ router.get('/', async(req, res) =>{
   res.render('login', { title: 'Locamat : Login', message: req.message});
 });
 
-router.post('/',(req, res, next) => {
+router.post('/', (req, res, next) => {
   
+  users.findByEmail(req.body.mail, (err, user) => {
+    if (err) {
+      next(err);
+      return;
+    }
+
+    if (user === null) {
+      res.render('register',{ message: 'You have to register first' }); 
+    }
+
+    bcrypt.compare(req.body.password,user.hashedPassword)
+    .then( (check) => {
+
+      if (check) {
+        const accessToken = jwt.sign(user,process.env.ACCESS_TOKEN_SECRET);
+        res.cookie('token',accessToken.toString());
+        res.redirect('/');
+      }
+      else {
+        res.render('login',{message: 'Wrong password'});
+      }
+
+    })
+    .catch((err) => {
+      next(err);
+    });
+
+
+  });
+
+
+/*
   connection.query("SELECT * FROM userTable WHERE mail = ? ", [req.body.mail], async(err,result) => {
     console.log(result)
     if(err) {
@@ -54,7 +86,8 @@ router.post('/',(req, res, next) => {
       next(err)
     }
   });
+  */
 
-})
+});
 
 module.exports = router;
