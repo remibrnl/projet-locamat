@@ -51,8 +51,6 @@
 						<th class="col">Email</th>
 						<th class="col">Matricule</th>
 						<th class="col">Rôle</th>
-						<th class="col"></th>
-						<th class="col"></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -90,7 +88,6 @@
                         <th class="col">Emprunteur</th>
                         <th class="col">Date de début d'emprunt</th>
 						<th class="col">Date de fin d'emprunt</th>
-						<th class="col"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -104,6 +101,7 @@
                         <td>a</td>
 						<td>a</td>
 						<td><button class="btn btn-outline-info" data-toggle="modal" data-target="#deviceEditionModal">Modifier</button></td>
+						<td><button class="btn btn-outline-danger" data-toggle="modal" data-target="#deviceDeleteModal">Supprimer</button></td>
                     </tr>
                     <!-- FIN DE A FAIRE EN EXPRESS-->
                 </tbody>
@@ -123,6 +121,9 @@
 
 <!-- NEW USER CREATION POPUP/MODAL -->
 <%- include('user_creation_popup.ejs') -%>
+
+<!-- DELETE DEVICE POPUP/MODAL -->
+<%- include('delete_device_popup.ejs') -%>
 
 
 
