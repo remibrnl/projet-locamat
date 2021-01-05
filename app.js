@@ -1,16 +1,17 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-require('dotenv').config();
+var createError = require('http-errors')
+var express = require('express')
+var path = require('path')
+var cookieParser = require('cookie-parser')
+var logger = require('morgan')
+require('dotenv').config()
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var loginRouter = require('./routes/login');
-var adminRouter = require('./routes/admin');
+var indexRouter = require('./routes/index')
+var usersRouter = require('./routes/users')
+var loginRouter = require('./routes/login')
+var adminUsersRouter = require('./routes/adminUsers')
 var registerRouteur = require('./routes/register')
 var profileRouter = require('./routes/profile')
+var adminDeviceRouter = require('./routes/adminDevices')
 
 var app = express();
 
@@ -37,7 +38,8 @@ app.use(express.static(__dirname + '/node_modules/bootstrap/dist'));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/login', loginRouter);
-app.use('/admin', adminRouter);
+app.use('/adminUsers', adminUsersRouter);
+app.use('/adminDevices',adminDeviceRouter)
 app.use('/register',registerRouteur);
 app.use('/profile',profileRouter)
 

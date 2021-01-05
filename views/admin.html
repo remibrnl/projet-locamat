@@ -11,11 +11,28 @@
 			<li class="nav-item">
 				<a href=".." class="nav-link">Matériel </a>
 			</li>
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+				  Dropdown
+				</a>
+				<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+				  <li><a class="dropdown-item" href="#">Action</a></li>
+				  <li><a class="dropdown-item" href="#">Another action</a></li>
+				  <li><hr class="dropdown-divider"></li>
+				  <li><a class="dropdown-item" href="#">Something else here</a></li>
+				</ul>
+			  </li>
+			<!--
 			<% if(user.isAdmin ==true) {%> 
-                <li class="nav-item active">
-					<a href="" class="nav-link">Administration <span class="sr-only">(actuel)</span></a>
-				</li>
-            <% } %>
+                <li class="nav-item dropdown active">
+                    <a href="admin" class="nav-link dropdown-toggle">Administration</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#">Utilisateurs</a></li>
+                        <li><a class="dropdown-item" href="#">Matériel</a></li>
+                    </ul>
+                </li>
+			<% } %>
+			-->
 			<li class="nav-item">
 				<a href="profile" class="nav-link">Profil</a>
 			</li>
@@ -37,7 +54,6 @@
 		<button class="btn btn-success" data-toggle="modal" data-target="#createDeviceModal">Ajout un matériel</button>
 		<button class="btn btn-primary" data-toggle="modal" data-target="#createUserModal">Ajouter un utilisateur</button>
 	</div>
-
 	<div class="card shadow">
 		<div class="card-header">
 			Liste des utilisateurs
@@ -72,7 +88,7 @@
 			</table>
 		</div>
 	</div>
-
+	
 	<hr>
 
 	<div class="card shadow">

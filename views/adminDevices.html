@@ -1,5 +1,4 @@
 <%- include('header') -%>
-
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="/">Locmat</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -8,11 +7,11 @@
 
     <div class="collapse navbar-collapse">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a href="" class="nav-link">Matériel <span class="sr-only">(actuel)</span></a>
             </li>
             <% if(user.isAdmin ==true) {%> 
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown active">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       Administration
                     </a>
@@ -44,50 +43,6 @@
 
 </nav>
 
-<div class="container">
-
-    <div class="card shadow">
-        <div class="card-header">
-            Liste du matériel
-        </div>
-        <div class="card-body">
-            <table class="table table-bordered shadow-sm">
-                <thead>
-                    <tr>
-                        <th class="col">Nom</th>
-                        <th class="col">Version</th>
-                        <th class="col">Référence</th>
-                        <th class="col">Numéro</th>
-                        <th class="col">Emprunteur</th>
-                        <th class="col">Date de début d'emprunt</th>
-                        <th class="col">Date de fin d'emprunt</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- A FAIRE EN EXPRESS-->
-                    <tr>
-                        <td>a</td>
-                        <td>a</td>
-                        <td>a</td>
-                        <td>a</td>
-                        <td>a</td>
-                        <td>a</td>
-                        <td>a</td>
-                    </tr>
-                    <!-- FIN DE A FAIRE EN EXPRESS-->
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-</div>
-
-<footer class="footer mt-auto py-3">
-    <div class="container">
-        <span class="text-muted">Locamat, 2020</span>
-    </div>
-</footer>
-
 <script>
     const button = document.getElementById('logoutBTN')
     button.addEventListener('click', (err)=>{
@@ -97,5 +52,4 @@
     })
 
 </script>
-
 <%- include('footer') -%>

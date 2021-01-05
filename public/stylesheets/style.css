@@ -20,3 +20,9 @@ a {
 .navbar-username-text {
   margin-right: 1em;
 }
+
+.user-admin-action{
+  text-align: center; 
+  margin-top: 1em;
+  margin-bottom: 1em;
+}

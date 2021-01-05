@@ -3,9 +3,13 @@ var router = express.Router()
 var jwt = require('jsonwebtoken')
 
 /* GET home page. */
-router.get('/',authenticateToken,(req, res)=>{
+/*router.get('/',authenticateToken,(req, res)=>{
   res.render('admin', { title: 'Locamat : Administration', user: req.user })
-});
+});*/
+
+router.get('/',authenticateToken,(req,res)=>{
+  res.render('adminUsers',{ title: 'Locamat : Users administration', user: req.user })
+})
 
 function authenticateToken(req, res, next) {
   const cookieToken = req.cookies 
