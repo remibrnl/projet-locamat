@@ -3,7 +3,9 @@
 	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="userBorrowedDevicesModalTitle">Liste du matérial emprunté pour NOM PRENOM</h5>
+				<% if(searchUser != undefined) {  %>
+					<h5 class="modal-title" id="userBorrowedDevicesModalTitle">Liste du matérial emprunté par <%= searchUser.firstName%> <%= searchUser.lastName%></h5>
+				<% } %>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
