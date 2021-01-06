@@ -98,7 +98,6 @@ describe('db/devices.js', () => {
                     done(err);
                     return;
                 }
-
                 var count = 0;
 
                 try {

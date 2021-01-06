@@ -1,16 +1,18 @@
-const { request } = require('express')
-var express = require('express')
-var router = express.Router()
-var jwt = require('jsonwebtoken')
-var users = require('../db/users.js')
+const { request } = require('express');
+var express = require('express');
+var router = express.Router();
+var jwt = require('jsonwebtoken');
+
+var users = require('../db/users.js');
 
 router.get('/',authenticateToken,(req,res)=>{
   users.findAll((err, userList) => {
     if (err) {
-      throw err
+      next(err);
+      return;
     }
     else{
-      res.render('adminUsers',{ title: 'Locamat : Users administration', user: req.user , searchUser: req.searchUser, userList: userList, message:''})
+      res.render('adminUsers',{ title: 'Locamat : Users administration', connectedUser: req.user , searchUser: req.searchUser, userList: userList, message:''})
     }
   })
 })
@@ -18,21 +20,22 @@ router.get('/',authenticateToken,(req,res)=>{
 router.post('/',authenticateToken,(req,res)=>{
   users.findAll((err, userList) => {
     if (err) {
-      throw err
+      next(err);
+      return;
     }
    
     if(req.body.id == '') {
-      res.render('adminUsers',{title: 'Locamat : Users administration', searchUser: req.searchUser, message: '', user: req.user, userList: userList})
+      res.render('adminUsers',{title: 'Locamat : Users administration', searchUser: req.searchUser, message: '', connectedUser: req.user, userList: userList})
     }
     else{
       users.findByID(req.body.id, (err, user) => {
         if (err) {
           var message = 'wrong user id'
-          res.render('adminUsers',{title: 'Locamat : Users administration', searchUser: undefined, message: message, user: req.user, userList: userList})
+          res.render('adminUsers',{title: 'Locamat : Users administration', searchUser: undefined, message: message, connectedUser: req.user, userList: userList})
         }
         else{
           console.log(user)
-          res.render('adminUsers',{title: 'Locamat : Users administration', searchUser: user, message: message, user: req.user, userList: userList})
+          res.render('adminUsers',{title: 'Locamat : Users administration', searchUser: user, message: message, connectedUser: req.user, userList: userList})
         }
       })
     }

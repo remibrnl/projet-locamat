@@ -12,7 +12,7 @@
                 <a href="/" class="nav-link">Matériel</a>
             </li>
 
-            <% if(user.isAdmin ==true) {%> 
+            <% if(connectedUser.isAdmin ==true) {%> 
                 <li class="nav-item dropdown active">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       Administration
@@ -36,7 +36,7 @@
         </ul>
 
         <span class="navbar-text navbar-username-text">
-            <%= user.firstName %> <%= user.lastName %>
+            <%= connectedUser.firstName %> <%= user.lastName %>
         </span>
         <form class="form-inline">
             <button  class="btn btn-outline-danger my-2 my-sm-0" id="logoutBTN">Déconnection</button>
@@ -88,8 +88,6 @@
 						<th class="col">Email</th>
 						<th class="col">Matricule</th>
 						<th class="col">Rôle</th>
-						<th class="col"></th>
-						<th class="col"></th>
 					</tr>
 				</thead>
 				

@@ -11,7 +11,7 @@
             <li class="nav-item active">
                 <a href="" class="nav-link">Matériel <span class="sr-only">(actuel)</span></a>
             </li>
-            <% if(user.isAdmin ==true) {%> 
+            <% if(connectedUser.isAdmin ==true) {%> 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       Administration
@@ -34,10 +34,10 @@
         </ul>
 
         <span class="navbar-text navbar-username-text">
-            <%= user.firstName %> <%= user.lastName %>
+            <%= connectedUser.firstName %> <%= connectedUser.lastName %>
         </span>
         <form class="form-inline">
-            <button  class="btn btn-outline-danger my-2 my-sm-0" id="logoutBTN">Déconnection</button>
+            <button  class="btn btn-outline-danger my-2 my-sm-0" id="logoutBTN">Déconnexion</button>
         </form>
         
     </div>
@@ -57,24 +57,24 @@
                         <th class="col">Nom</th>
                         <th class="col">Version</th>
                         <th class="col">Référence</th>
-                        <th class="col">Numéro</th>
                         <th class="col">Emprunteur</th>
                         <th class="col">Date de début d'emprunt</th>
                         <th class="col">Date de fin d'emprunt</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- A FAIRE EN EXPRESS-->
-                    <tr>
-                        <td>a</td>
-                        <td>a</td>
-                        <td>a</td>
-                        <td>a</td>
-                        <td>a</td>
-                        <td>a</td>
-                        <td>a</td>
-                    </tr>
-                    <!-- FIN DE A FAIRE EN EXPRESS-->
+                    <% if (devicesList.length) { %>
+                        <% devicesList.forEach((device) => { %>
+                            <tr>
+                                <td><%= device.name %></td>
+                                <td><%= device.version %></td>
+                                <td><%= device.ref %></td>
+                                <td><%= device.borrower.firstName %> <%= device.borrower.lastName %></td>
+                                <td><%= device.borrowingStartDate %></td>
+                                <td><%= device.borrowingEndDate %></td>
+                            </tr>
+                        <% }); %> 
+                    <% } %>
                 </tbody>
             </table>
         </div>
