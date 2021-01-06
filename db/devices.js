@@ -37,6 +37,39 @@ function findByRef(ref, callback) {
     });
 }
 
+function findAll(callback) {
+    var connection = getConnection();
+    
+    connection.query('SELECT * FROM deviceTable ;', (err, results) => {
+        if(err) {
+            callback(err);
+            return;
+        }
+        
+        if (results === null) {
+            callback(new Error('User table is empty in the database'));
+            return;
+        }
+        var devicesList = results.map((element) => {
+            return {
+                ref: element.ref,
+                name: element.name,
+                version: element.version,
+                pictureUrl: element.pictureUrl,
+                borrowerID: element.borrowerID,
+                borrowingStartDate: element.borrowingStartDate,
+                borrowingEndDate: element.borrowingEndDate
+            };
+        })
+        
+        // map waits because it returns value
+        
+        connection.end(() => {
+            callback(null, devicesList);
+        });
+    });
+}
+
 // creating
 
 function create(device, callback) {
@@ -91,6 +124,7 @@ function update(device, callback) {
 
 module.exports = {
     findByRef: findByRef,
+    findAll: findAll,
     create: create,
     remove: remove,
     update: update

@@ -1,7 +1,7 @@
 var assert = require('chai').assert;
 //var expect = require('chai').expect;
 
-var user = require('../db/users.js');
+var users = require('../db/users.js');
 var getConnection = require('../db/connectionTools.js').getConnection;
 
 // Mysql server connection object
@@ -48,7 +48,7 @@ describe('db/user.js', () => {
 
         it('findByEmail()', (done) => {
 
-            user.findByEmail(dummyUser.mail, (err, result) => {
+            users.findByEmail(dummyUser.mail, (err, result) => {
                 
                 if (err) {
                     done(err);
@@ -66,9 +66,32 @@ describe('db/user.js', () => {
         });
 
 
+        it('findAll()', (done) => {
+            users.findAll((err, result) => {
+                if (err) {
+                    done(err);
+                    return;
+                }
+
+                var count = 0;
+
+                try {
+                    assert(result.some((element) => {
+                        return JSON.stringify(element) === JSON.stringify(dummyUser);
+                    }), 'the dummy is in the result array');
+                    done();
+                }
+                catch (err) {
+                    done(err);
+                }
+                
+            });
+        });
+
+
         it('findByID()', (done) => {
 
-            user.findByID(dummyUser.id, (err, result) => {
+            users.findByID(dummyUser.id, (err, result) => {
                 
                 if (err) {
                     done(err);
@@ -100,7 +123,7 @@ describe('db/user.js', () => {
 
         it('create()', (done) => {
             
-            user.create(dummyUser, (err, results) => {
+            users.create(dummyUser, (err, results) => {
                 
                 if (err) {
                     done(err);
@@ -156,7 +179,7 @@ describe('db/user.js', () => {
         })
 
         it('remove()', (done) => {
-            user.remove(dummyUser, (err) => {
+            users.remove(dummyUser, (err) => {
                 if (err) {
                     done(err);
                     return;
@@ -189,7 +212,7 @@ describe('db/user.js', () => {
             // Never change the id
             updatedDummyUser.isAdmin = 0;
 
-            user.update(updatedDummyUser, (err) => {
+            users.update(updatedDummyUser, (err) => {
                 if (err) {
                     done(err);
                     return;
