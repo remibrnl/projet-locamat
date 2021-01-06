@@ -81,22 +81,22 @@ function findAll(callback) {
             callback(new Error('User table is empty in the database'));
             return;
         }
-        var userList = []
-        for(let i = 0 ; i < results.length ; i++){
-            var user = {
-                id: results[i].id,
-                lastName: results[i].lastName,
-                firstName: results[i].firstName,
-                mail: results[i].mail,
-                isAdmin: results[i].isAdmin,
-                hashedPassword: results[i].hashedPassword
+
+        var usersList = results.map((element) => {
+            return {
+                id: element.id,
+                lastName: element.lastName,
+                firstName: element.firstName,
+                mail: element.mail,
+                isAdmin: element.isAdmin,
+                hashedPassword: element.hashedPassword
             };
-            userList.push(user)
-        }
+        });
         
+        // map waits because of its return
         
         connection.end(() => {
-            callback(null, userList);
+            callback(null, usersList);
         });
     });
 }

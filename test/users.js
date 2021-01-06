@@ -66,22 +66,25 @@ describe('db/user.js', () => {
         });
 
 
-        it.skip('findAll()', (done) => {
+        it('findAll()', (done) => {
             users.findAll((err, result) => {
                 if (err) {
                     done(err);
                     return;
                 }
-                result.forEach((element) => {
-                    if (JSON.stringify(element) === JSON.stringify(dummyUser)) {
-                        console.log(JSON.stringify(element));
-                        console.log(JSON.stringify(dummyUser));
-                        done();
-                        return;
-                    }
-                });
 
-                done(new Error('the dummy is not in the result array'));
+                var count = 0;
+
+                try {
+                    assert(result.some((element) => {
+                        return JSON.stringify(element) === JSON.stringify(dummyUser);
+                    }), 'the dummy is in the result array');
+                    done();
+                }
+                catch (err) {
+                    done(err);
+                }
+                
             });
         });
 

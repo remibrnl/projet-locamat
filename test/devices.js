@@ -92,8 +92,25 @@ describe('db/devices.js', () => {
             });
         });
 
-        it.skip('findAll()', (done) => {
-            
+        it('findAll()', (done) => {
+            devices.findAll((err, result) => {
+                if (err) {
+                    done(err);
+                    return;
+                }
+
+                var count = 0;
+
+                try {
+                    assert(result.some((element) => {
+                        return JSON.stringify(element) === JSON.stringify(dummyDevice);
+                    }), 'the dummy is in the result array');
+                    done();
+                }
+                catch (err) {
+                    done(err);
+                }
+            })
         })
 
     });
