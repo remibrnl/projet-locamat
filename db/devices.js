@@ -50,7 +50,7 @@ function findAll(callback) {
             callback(new Error('User table is empty in the database'));
             return;
         }
-        var userList = results.map((element) => {
+        var devicesList = results.map((element) => {
             return {
                 ref: element.ref,
                 name: element.name,
@@ -65,7 +65,7 @@ function findAll(callback) {
         // map waits because it returns value
         
         connection.end(() => {
-            callback(null, userList);
+            callback(null, devicesList);
         });
     });
 }
