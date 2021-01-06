@@ -29,3 +29,21 @@ Fonction BDD + création bdd --> Rémi
 
 Rapport spec lot 2 et 3 
 
+
+-----------------------------------------06/01---------------------------------------------------------------
+
+index.html (matériel) : Guillaume + Rémi 
+ - afficher le matériel emprunter + bouton pour emprunter 
+
+adminDevice + adminUser : Maxime 
+ - comme pour adminUser tout faire  
+ - adminUser a finir (popup) 
+
+Test : 
+ - test d'intégration 
+ - cahier de recette (livrable IMPORTANT) 
+
+Specs : 
+ - finir le cahier des specs (lot 2/3) 
+
+mail pour le prof : Maxime 
