@@ -39,16 +39,45 @@ router.get('/', authenticateToken, (req, res) =>{
 
 				if (count === array.length) {
 
-					devices.findAll((err, allDevicesList) => {
+					devices.findAll((err, result) => {
+						if (err) {
+							next(err);
+							return;
+						}
+
+						allDevicesList = result.filter((device) => {
+							return device.borrowingStartDate == null;
+						});
+
+
 						res.render('index', { title: 'Matériel', connectedUser: req.user, users: users, devicesList: devicesList, allDevicesList: allDevicesList});
-					})
+					});
 					
 				}
 			});
 		});
-	})
+	});
 	
 });
+
+router.post('/', authenticateToken, (req, res, next) => {
+	// Gathering borrowing input data
+	var device = JSON.parse(req.body.device);
+	device.borrowerID = req.user.id;
+	device.borrowingStartDate = new Date(req.body.borrowingStartDate);
+	device.borrowingEndDate = new Date(req.body.borrowingEndDate);
+
+	console.log(device);
+
+	devices.update(device, (err) => {
+		if (err) {
+			next(err);
+			return;
+		}
+
+		res.redirect('/');
+	})
+})
 
 // A FAIRE : Trouver un moyen de rediriger sur /login quand / donne "Unauthorized" --> fait à check ensemble 
 function authenticateToken(req, res, next) {
@@ -67,7 +96,7 @@ function authenticateToken(req, res, next) {
 			}
 			else {
 				req.user = decoded
-				next()
+				next();
 			}
 		})
 	}
