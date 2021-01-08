@@ -17,7 +17,7 @@ var dummyUser = {
 };
 
 var dummyDevice = {
-    ref: 4594132,
+    ref: '4594132',
     name: 'iPhone 12 Pro',
     version: '2',
     pictureUrl: 'img/phones/apple-iphone12-pro.png',
