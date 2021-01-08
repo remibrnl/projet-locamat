@@ -98,7 +98,6 @@ describe('db/devices.js', () => {
                     done(err);
                     return;
                 }
-                var count = 0;
 
                 try {
                     assert(result.some((element) => {
@@ -111,6 +110,26 @@ describe('db/devices.js', () => {
                 }
             })
         })
+
+        it('findByUser()', (done) => {
+            devices.findByUser(dummyUser, (err, result) => {
+                if (err) {
+                    done(err);
+                    return;
+                }
+
+                try {
+                    console.log(result);
+                    assert(result.some((element) => {
+                        return element.borrowerID == dummyUser.id;
+                    }), 'the dummy is in the result array');
+                    done();
+                }
+                catch (err) {
+                    done(err);
+                }
+            });
+        });
 
     });
 

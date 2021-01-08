@@ -10,7 +10,7 @@ var devices = require('../db/devices.js');
 /* GET home page. */
 router.get('/', authenticateToken, (req, res) =>{
 
-	devices.findByUser(req.user.id,(err, result) => {
+	devices.findByUser(req.user,(err, result) => {
 		if (err) {
 			throw err;
 		}
@@ -38,7 +38,11 @@ router.get('/', authenticateToken, (req, res) =>{
 				count++;
 
 				if (count === array.length) {
-					res.render('index', { title: 'Matériel', connectedUser: req.user, users: users, devicesList: devicesList});
+
+					devices.findAll((err, allDevicesList) => {
+						res.render('index', { title: 'Matériel', connectedUser: req.user, users: users, devicesList: devicesList, allDevicesList: allDevicesList});
+					})
+					
 				}
 			});
 		});

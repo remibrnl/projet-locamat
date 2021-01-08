@@ -46,6 +46,11 @@
 
 <div class="container">
 
+    <div class="borrow-button">
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#borrowDeviceModal">Réserver</button>
+    </div>
+
+
     <div class="card shadow">
         <div class="card-header">
             Liste du matériel
@@ -87,6 +92,9 @@
         <span class="text-muted">Locamat, 2020</span>
     </div>
 </footer>
+
+<!-- BORROW DEVICE POPUP/MODAL -->
+<%- include('borrow_device_popup.ejs'); -%>
 
 <script>
     const button = document.getElementById('logoutBTN')

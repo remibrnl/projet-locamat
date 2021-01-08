@@ -70,10 +70,10 @@ function findAll(callback) {
     });
 }
 
-function findByUser(id,callback) {
+function findByUser(user, callback) {
     var connection = getConnection();
     
-    connection.query('SELECT * FROM deviceTable where borrowerID = ? ;', [id] , (err, results) => {
+    connection.query('SELECT * FROM deviceTable where borrowerID = ? ;', [user.id] , (err, results) => {
         if(err) {
             callback(err);
             return;
