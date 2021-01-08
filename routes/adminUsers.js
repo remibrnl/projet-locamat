@@ -30,18 +30,18 @@ router.post('/',authenticateToken,(req,res)=>{
       return;
     }
   
-    if(req.body.id == '') {
+    if(req.body.searchId == '') {
       res.render('adminUsers',{title: 'Locamat : Users administration', searchUser: req.searchUser, message: '', connectedUser: req.user, userList: userList, devicesList: devicesList})
     }
     else{
 
-      users.findByID(req.body.id, (err, user) => {
+      users.findByID(req.body.searchId, (err, user) => {
         if (err) {
           var message = 'wrong user id'
           res.render('adminUsers',{title: 'Locamat : Users administration', searchUser: undefined, message: message, connectedUser: req.user, userList: userList , devicesList: devicesList})
         }
         else{
-          devices.findByUser(req.body.id,(err,result)=>{
+          devices.findByUser(req.body.searchId,(err,result)=>{
             if(err) {
               next(err);
               return
@@ -65,7 +65,7 @@ router.post('/userModify',authenticateToken,async(req,res)=>{
       isAdmin: false,
       hashedPassword: hashedPassword
     }
-    if (req.body.isAdmin !== undefined) updateUser.isAdmin = true;
+    if (req.body.isAdminModify !== undefined) updateUser.isAdmin = true;
 
     users.update(updateUser,(err,result)=>{
       if(err){
@@ -74,6 +74,10 @@ router.post('/userModify',authenticateToken,async(req,res)=>{
       res.redirect('/adminUsers')
     })
   })
+})
+
+router.post('deleteUser',authenticateToken,(req,res)=>{
+  res.redirect('/')
 })
 
 router.post('/createUser',authenticateToken,(req,res)=>{

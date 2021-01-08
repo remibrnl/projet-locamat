@@ -54,7 +54,7 @@
                 <label for="floatingInput">User id : </label>
             </div>
             <div>
-                <input type="text" placeholder="JD01999" id="id" name="id" width="50px" height="100px">
+                <input type="text" placeholder="JD01999" id="searchId" name="searchId" width="50px" height="100px">
                 <button class="sumbit" className="btn btn-link">
                     <i class="fa fa-search" aria-hidden="true"></i>
                 </button>
@@ -99,8 +99,12 @@
                                         Emprunteur
                                     <% } %>
                                 </td>
-                                <td><button class="btn btn-outline-info" data-toggle="modal" data-target="#userBorrowedDevicesModal">Matériels empruntés</button></td>
-                                <td><button class="btn btn-outline-info" data-toggle="modal" data-target="#userModifyModal">Modifier</button></td>
+                                <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                                    <button class="btn btn-outline-info" data-toggle="modal" data-target="#userBorrowedDevicesModal">Matériels empruntés</button>
+                                    <button class="btn btn-outline-warning" data-toggle="modal" data-target="#userModifyModal">Modifier</button>
+                                    <button class="btn btn-outline-danger" data-toggle="modal" data-target="#userDeleteModal">Supprimer</button>
+                                </div>
+                                
                             </tr>
                         <tbody>
                     <% } else { %>
@@ -137,6 +141,10 @@
 
 <!-- USER MODIFY POPUP -->
 <%- include('modify_user_popup.ejs') -%>
+
+<!-- USER DELETE POPUP -->
+<%- include('delete_user_popup.ejs') -%>
+
 
 <script>
     const button = document.getElementById('logoutBTN')
