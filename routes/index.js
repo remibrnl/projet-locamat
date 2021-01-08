@@ -2,10 +2,10 @@ require('dotenv').config();
 
 var express = require('express');
 var router = express.Router();
-var jwt = require('jsonwebtoken');
 
 var users = require('../db/users.js');
 var devices = require('../db/devices.js');
+var authenticateToken = require('../routes/authenticateToken.js');
 
 /* GET home page. */
 router.get('/', authenticateToken, (req, res) =>{
@@ -67,7 +67,6 @@ router.post('/', authenticateToken, (req, res, next) => {
 	device.borrowingStartDate = new Date(req.body.borrowingStartDate);
 	device.borrowingEndDate = new Date(req.body.borrowingEndDate);
 
-	console.log(device);
 
 	devices.update(device, (err) => {
 		if (err) {
@@ -78,28 +77,5 @@ router.post('/', authenticateToken, (req, res, next) => {
 		res.redirect('/');
 	})
 })
-
-// A FAIRE : Trouver un moyen de rediriger sur /login quand / donne "Unauthorized" --> fait à check ensemble 
-function authenticateToken(req, res, next) {
-	const cookieToken = req.cookies 
-	const token = cookieToken.token
-	
-	if(token == null || token=="") { return res.redirect('login')} 
-	else{
-		jwt.verify(token.toString(), process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
-			if (err){
-				res.redirect('/login', {message: 'invalid token'})
-			}
-			
-			else if (!decoded) {
-				res.redirect('/login', {message: 'invalid token'})
-			}
-			else {
-				req.user = decoded
-				next();
-			}
-		})
-	}
-}
 
 module.exports = router
