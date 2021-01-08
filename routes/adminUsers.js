@@ -14,6 +14,7 @@ router.get('/',authenticateToken,(req,res)=>{
       return;
     }
     else{
+      console.log(req.user)
       res.render('adminUsers',{ title: 'Locamat : Users administration', connectedUser: req.user , searchUser: req.searchUser, userList: userList, message:'', devicesList: req.devicesList})
     }
   })
@@ -54,39 +55,45 @@ router.post('/',authenticateToken,(req,res)=>{
 })
 
 router.post('/userModify',authenticateToken,async(req,res)=>{
-  var devicesList = [];
-
-  users.findAll((err, userList) => {
-    if (err) {
-      next(err);
-      return;
+  bcrypt.hash(req.body.password,10)
+  .then((hashedPassword) => {
+    var updateUser ={
+      id: req.user.id,
+      lastName: req.body.lastName,
+      firstName: req.body.firstName,
+      mail: req.body.mail,
+      isAdmin: false,
+      hashedPassword: hashedPassword
     }
-    bcrypt.hash(req.body.password,10)
-    .then((hashedPassword) => {
-      var updateUser ={
-        id: req.user.id,
-        lastName: req.body.lastName,
-        firstName: req.body.firstName,
-        mail: req.body.mail,
-        isAdmin: false,
-        hashedPassword: hashedPassword
-      }
-      if (req.body.isAdmin !== undefined) updateUser.isAdmin = true;
+    if (req.body.isAdmin !== undefined) updateUser.isAdmin = true;
 
-      users.update(updateUser,(err,result)=>{
-        if(err){
-          throw err
-        }
-        devices.findByUser(req.body.id,(err,result)=>{
-          if(err) {
-            next(err);
-            return
-          }
-          message = 'modification réussi'
-          //res.render('adminUsers',{title: 'Locamat : Users administration', searchUser: undefined, message: message, connectedUser: req.user, userList: userList, devicesList: undefined})
-          res.redirect('/adminUsers')
-        })
-      })
+    users.update(updateUser,(err,result)=>{
+      if(err){
+        throw err
+      }
+      res.redirect('/adminUsers')
+    })
+  })
+})
+
+router.post('/createUser',authenticateToken,(req,res)=>{
+  bcrypt.hash(req.body.password,10)
+  .then((hashedPassword) => {
+    var updateUser ={
+      id: req.body.id,
+      lastName: req.body.lastName,
+      firstName: req.body.firstName,
+      mail: req.body.mail,
+      isAdmin: false,
+      hashedPassword: hashedPassword
+    }
+    if (req.body.isAdmin != undefined) updateUser.isAdmin = true;
+
+    users.create(updateUser,(err,result)=>{
+      if(err){
+        throw err
+      }
+      res.redirect('/adminUsers')
     })
   })
 })
