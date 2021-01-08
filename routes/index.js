@@ -2,10 +2,10 @@ require('dotenv').config();
 
 var express = require('express');
 var router = express.Router();
-var jwt = require('jsonwebtoken');
 
 var users = require('../db/users.js');
 var devices = require('../db/devices.js');
+var authenticateToken = require('../routes/authenticateToken.js');
 
 /* GET home page. */
 router.get('/', authenticateToken, (req, res) =>{
@@ -39,38 +39,43 @@ router.get('/', authenticateToken, (req, res) =>{
 
 				if (count === array.length) {
 
-					devices.findAll((err, allDevicesList) => {
+					devices.findAll((err, result) => {
+						if (err) {
+							next(err);
+							return;
+						}
+
+						allDevicesList = result.filter((device) => {
+							return device.borrowingStartDate == null;
+						});
+
+
 						res.render('index', { title: 'Matériel', connectedUser: req.user, users: users, devicesList: devicesList, allDevicesList: allDevicesList});
-					})
+					});
 					
 				}
 			});
 		});
-	})
+	});
 	
 });
 
-// A FAIRE : Trouver un moyen de rediriger sur /login quand / donne "Unauthorized" --> fait à check ensemble 
-function authenticateToken(req, res, next) {
-	const cookieToken = req.cookies 
-	const token = cookieToken.token
-	
-	if(token == null || token=="") { return res.redirect('login')} 
-	else{
-		jwt.verify(token.toString(), process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
-			if (err){
-				res.redirect('/login', {message: 'invalid token'})
-			}
-			
-			else if (!decoded) {
-				res.redirect('/login', {message: 'invalid token'})
-			}
-			else {
-				req.user = decoded
-				next()
-			}
-		})
-	}
-}
+router.post('/', authenticateToken, (req, res, next) => {
+	// Gathering borrowing input data
+	var device = JSON.parse(req.body.device);
+	device.borrowerID = req.user.id;
+	device.borrowingStartDate = new Date(req.body.borrowingStartDate);
+	device.borrowingEndDate = new Date(req.body.borrowingEndDate);
+
+
+	devices.update(device, (err) => {
+		if (err) {
+			next(err);
+			return;
+		}
+
+		res.redirect('/');
+	})
+})
 
 module.exports = router

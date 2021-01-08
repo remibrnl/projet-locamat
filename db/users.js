@@ -71,7 +71,7 @@ function findAll(callback) {
 
     var connection = getConnection();
     
-    connection.query('SELECT * FROM userTable ;', (err, results) => {
+    connection.query('SELECT * FROM userTable ORDER BY id;', (err, results) => {
         if(err) {
             callback(err);
             return;
