@@ -2,6 +2,7 @@ const { request } = require('express');
 var express = require('express');
 var router = express.Router();
 var jwt = require('jsonwebtoken');
+var bcrypt = require('bcrypt')
 
 var users = require('../db/users.js');
 var devices = require('../db/devices.js');
@@ -52,30 +53,44 @@ router.post('/',authenticateToken,(req,res)=>{
   })
 })
 
-router.post('/userModify',authenticateToken,(req,res)=>{
-  var updateUser ={
-    id: req.body.id,
-    lastName: req.body.lastName,
-    firstName: req.body.firstName,
-    mail: req.body.mail,
-    isAdmin: req.body.isAdmin,
-    hashedPassword: req.body.hashedPassword
-  }
+router.post('/userModify',authenticateToken,async(req,res)=>{
+  var devicesList = [];
 
-  users.update(updateUser,(err,result)=>{
-    if(err){
-      throw err
+  users.findAll((err, userList) => {
+    if (err) {
+      next(err);
+      return;
     }
-    devices.findByUser(req.body.id,(err,result)=>{
-      if(err) {
-        next(err);
-        return
+    bcrypt.hash(req.body.password,10)
+    .then((hashedPassword) => {
+      var updateUser ={
+        id: req.user.id,
+        lastName: req.body.lastName,
+        firstName: req.body.firstName,
+        mail: req.body.mail,
+        isAdmin: false,
+        hashedPassword: hashedPassword
       }
-      message = 'modification réussi'
-      res.render('adminUsers',{title: 'Locamat : Users administration', searchUser: user, message: message, connectedUser: req.user, userList: userList, devicesList: result})
+      if (req.body.isAdmin !== undefined) updateUser.isAdmin = true;
+
+      users.update(updateUser,(err,result)=>{
+        if(err){
+          throw err
+        }
+        devices.findByUser(req.body.id,(err,result)=>{
+          if(err) {
+            next(err);
+            return
+          }
+          message = 'modification réussi'
+          //res.render('adminUsers',{title: 'Locamat : Users administration', searchUser: undefined, message: message, connectedUser: req.user, userList: userList, devicesList: undefined})
+          res.redirect('/adminUsers')
+        })
+      })
     })
   })
 })
+
 
 
 function authenticateToken(req, res, next) { 
