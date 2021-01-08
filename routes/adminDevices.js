@@ -2,6 +2,9 @@ var express = require('express')
 var router = express.Router()
 var jwt = require('jsonwebtoken')
 
+var devices = require('../db/devices.js');
+
+//Faire router.get pour que AdminDEvices.html marche
 router.get('/',authenticateToken,(req,res)=>{
     res.render('adminDevices',{ title: 'Locamat : Materiel administration', user: req.user })
 })
