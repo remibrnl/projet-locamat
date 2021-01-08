@@ -36,7 +36,7 @@
         </ul>
 
         <span class="navbar-text navbar-username-text">
-            <%= connectedUser.firstName %> <%= user.lastName %>
+            <%= connectedUser.firstName %> <%= connectedUser.lastName %>
         </span>
         <form class="form-inline">
             <button  class="btn btn-outline-danger my-2 my-sm-0" id="logoutBTN">Déconnection</button>
@@ -101,7 +101,7 @@
                                 <td><%= searchUser.firstName %></td>
                                 <td><%= searchUser.mail %></td>
                                 <td><%= searchUser.id %></td>
-                                <<td>
+                                <td>
                                     <% if(searchUser.isAdmin == 1) {%>
                                         Administrateur
                                     <% } else { %>
@@ -114,7 +114,6 @@
                         <tbody>
                     <% } else { %>
                         <tbody>
-                            <%= userList.lenght %>
                             <% for(let i=0 ; i < userList.length ; i++) {%>
                                 <tr>
                                     <td><%= userList[i].lastName %></td>

@@ -39,11 +39,11 @@ adminDevice + adminUser : Maxime
  - comme pour adminUser tout faire  
  - adminUser a finir (popup) 
 
-Test : 
- - test d'intégration 
- - cahier de recette (livrable IMPORTANT) 
+Test :  
+ - test d'intégration --> Guillaume + Maxime 
+ - cahier de recette (livrable IMPORTANT) --> Chaque personne ayant fait des test rempli 
 
-Specs : 
+Specs : Romain 
  - finir le cahier des specs (lot 2/3) 
 
 mail pour le prof : Maxime 

@@ -4,6 +4,7 @@ var router = express.Router();
 var jwt = require('jsonwebtoken');
 
 var users = require('../db/users.js');
+var devices = require('../db/devices.js');
 
 router.get('/',authenticateToken,(req,res)=>{
   users.findAll((err, userList) => {
@@ -12,35 +13,45 @@ router.get('/',authenticateToken,(req,res)=>{
       return;
     }
     else{
-      res.render('adminUsers',{ title: 'Locamat : Users administration', connectedUser: req.user , searchUser: req.searchUser, userList: userList, message:''})
+      res.render('adminUsers',{ title: 'Locamat : Users administration', connectedUser: req.user , searchUser: req.searchUser, userList: userList, message:'', devicesList: req.devicesList})
     }
   })
 })
 
 router.post('/',authenticateToken,(req,res)=>{
+
+  var devicesList = [];
+
   users.findAll((err, userList) => {
     if (err) {
       next(err);
       return;
     }
-   
+  
     if(req.body.id == '') {
-      res.render('adminUsers',{title: 'Locamat : Users administration', searchUser: req.searchUser, message: '', connectedUser: req.user, userList: userList})
+      res.render('adminUsers',{title: 'Locamat : Users administration', searchUser: req.searchUser, message: '', connectedUser: req.user, userList: userList, devicesList: devicesList})
     }
     else{
+
       users.findByID(req.body.id, (err, user) => {
         if (err) {
           var message = 'wrong user id'
-          res.render('adminUsers',{title: 'Locamat : Users administration', searchUser: undefined, message: message, connectedUser: req.user, userList: userList})
+          res.render('adminUsers',{title: 'Locamat : Users administration', searchUser: undefined, message: message, connectedUser: req.user, userList: userList , devicesList: devicesList})
         }
         else{
-          console.log(user)
-          res.render('adminUsers',{title: 'Locamat : Users administration', searchUser: user, message: message, connectedUser: req.user, userList: userList})
+          devices.findByUser(req.body.id,(err,result)=>{
+            if(err) {
+              next(err);
+              return
+            }
+            res.render('adminUsers',{title: 'Locamat : Users administration', searchUser: user, message: message, connectedUser: req.user, userList: userList, devicesList: result})
+          })
         }
       })
     }
   })
 })
+
 
 function authenticateToken(req, res, next) { 
   const cookieToken = req.cookies 
@@ -64,4 +75,4 @@ function authenticateToken(req, res, next) {
   }
 }
 
-module.exports = router;
+module.exports = router 

@@ -45,7 +45,7 @@ function findByID(id, callback) {
         if(err) {
             callback(err);
             return;
-        }
+        } 
 
         if (results[0] === undefined) {
             callback(new Error('user was not found in the database'));

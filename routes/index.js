@@ -10,10 +10,9 @@ var devices = require('../db/devices.js');
 /* GET home page. */
 router.get('/', authenticateToken, (req, res) =>{
 
-	devices.findAll((err, result) => {
+	devices.findByUser(req.user.id,(err, result) => {
 		if (err) {
-			next(err);
-			return;
+			throw err;
 		}
 		
 
@@ -24,8 +23,7 @@ router.get('/', authenticateToken, (req, res) =>{
 		result.forEach((element, index, array) => {
 			users.findByID(element.borrowerID, (err, borrower) => {
 				if (err) {
-					next(err);
-					return;
+					throw err;
 				}
 				devicesList.push({
 					ref: element.ref,

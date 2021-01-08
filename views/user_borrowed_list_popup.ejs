@@ -3,6 +3,7 @@
 	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
+				
 				<% if(searchUser != undefined) {  %>
 					<h5 class="modal-title" id="userBorrowedDevicesModalTitle">Liste du matérial emprunté par <%= searchUser.firstName%> <%= searchUser.lastName%></h5>
 				<% } %>
@@ -11,31 +12,36 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<table class="table table-bordered shadow-sm">
-					<thead>
-						<tr>
-							<th class="col">Nom</th>
-							<th class="col">Version</th>
-							<th class="col">Référence</th>
-							<th class="col">Numéro</th>
-							<th class="col">Date de début d'emprunt</th>
-							<th class="col">Date de fin d'emprunt</th>
-						</tr>
-					</thead>
-					<tbody>
-						<!-- A FAIRE EN EXPRESS-->
-						<!-- liste du matériel emprunté pour un utilisateur donné-->
-						<tr>
-							<td>a</td>
-							<td>a</td>
-							<td>a</td>
-							<td>a</td>
-							<td>a</td>
-							<td>a</td>
-						</tr>
-						<!-- FIN DE A FAIRE EN EXPRESS-->
-					</tbody>
-				</table>
+				<% if(devicesList.length != 0) { %>
+					<table class="table table-bordered shadow-sm">
+						<thead>
+							<tr>
+								<th class="col">Nom</th>
+								<th class="col">Version</th>
+								<th class="col">Référence</th>
+								<th class="col">Date de début d'emprunt</th>
+								<th class="col">Date de fin d'emprunt</th>
+							</tr>
+						</thead>
+						
+							<!-- A FAIRE EN EXPRESS-->
+							<!-- liste du matériel emprunté pour un utilisateur donné-->
+							
+								<tbody>
+								<% for(var i = 0 ; i < devicesList.length ; i++) {%>
+									<tr>
+										<td><%= devicesList[i].name %></td>
+										<td><%= devicesList[i].version %></td>
+										<td><%= devicesList[i].ref %></td>
+										<td><%= devicesList[i].borrowingStartDate %></td>
+										<td><%= devicesList[i].borrowingEndDate %></td>
+									</tr>
+								<% } %>
+							</tbody>
+					</table>
+				<% } else { %>
+					<p>Aucun emprunt </p>
+				<% } %>
 			</div>
 
 			<div class="modal-footer">

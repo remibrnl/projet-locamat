@@ -36,5 +36,30 @@ INSERT INTO `usertable` (`id`, `lastName`, `firstName`, `mail`, `isAdmin`, `hash
 ('GR63038', 'Russell', 'George', 'george.russell@williams.com', 0, '$2b$10$3cRVss/PNJZT2W1vzga4k.dPTkGgddQN7l6Aq8ZwjTmPri5NQKKRa'),
 ('NL06017', 'Latifi', 'Nicholas', 'nicholas.latifi@williams.com', 0, '$2b$10$H6FalskWZcfaGNm16mOhye0u9DDN4Ez8lWHysrQeKHchjchhnIXCy');
 
+CREATE TABLE `deviceTable` (
+  `ref` int(11) NOT NULL,
+  `name` varchar(128) DEFAULT NULL,
+  `version` varchar(128) DEFAULT NULL,
+  `pictureUrl` VARCHAR(2083) DEFAULT NULL,
+  `borrowerID` varchar(128) DEFAULT NULL,
+  `borrowingStartDate` DATE DEFAULT NULL, 
+  `borrowingEndDate` DATE DEFAULT NULL, 
+  PRIMARY KEY(`ref`),
+  FOREIGN KEY(`borrowerID`) REFERENCES usertable(`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+INSERT INTO `deviceTable` (`ref`, `name`, `version`, `borrowerID`, `borrowingStartDate`,`borrowingEndDate`) VALUES
+(79975,'iPhone','12 Pro','LH44266','2021-01-07','2021-01-21'),
+(86042,'Xiaomi','Mi 10T Pro','MV33119','2021-02-17','2021-03-17'),
+(41432,'Dell','G3 1530','LH44266','2021-01-01','2022-01-01'),
+(98362,'iPad','Pro','YT07024','2021-03-07','2021-03-14'),
+(43581,'MacBook','Pro Touch','PG10064','2021-01-02','2021-07-01'),
+(83593,'OnePlus','8 Pro','SV05258','2021-02-07','2021-02-14'),
+(88537,'Samsung Galaxy','Z Fold2','CS55119','2021-01-07','2021-04-14'),
+(52991,'iPhone','12 Pro',NULL,NULL,NULL),
+(20930,'iPhone','12 Pro',NULL,NULL,NULL),
+(53515,'iPhone','12 Pro',NULL,NULL,NULL),
+(10183,'Dell','G3 1530',NULL,NULL,NULL),
+(21537,'Dell','G3 1530',NULL,NULL,NULL),
+(56186,'Dell','G3 1530',NULL,NULL,NULL);
 
