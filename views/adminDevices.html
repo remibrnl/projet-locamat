@@ -36,20 +36,80 @@
             <%= user.firstName %> <%= user.lastName %>
         </span>
         <form class="form-inline">
-            <button  class="btn btn-outline-danger my-2 my-sm-0" id="logoutBTN">Déconnection</button>
+            <button  class="btn btn-outline-danger my-2 my-sm-0" id="logoutBTN">Déconnexion</button>
         </form>
         
     </div>
 
 </nav>
 
-<script>
-    const button = document.getElementById('logoutBTN')
-    button.addEventListener('click', (err)=>{
-        console.log("clicked")
-        document.cookie="token="
-        location.reload()
-    })
+<div class="container">
 
+	<div class="admin-buttons">
+		<button class="btn btn-success" data-toggle="modal" data-target="#createDeviceModal">Ajout un matériel</button>
+		<button class="btn btn-primary" data-toggle="modal" data-target="#createUserModal">Ajouter un utilisateur</button>
+	</div>
+	
+	<div class="card shadow">
+        <div class="card-header">
+            Liste du matériel
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered shadow-sm">
+                <thead>
+                    <tr>
+                        <th class="col">Nom</th>
+                        <th class="col">Version</th>
+                        <th class="col">Référence</th>
+                        <th class="col">Numéro</th>
+                        <th class="col">Emprunteur</th>
+                        <th class="col">Date de début d'emprunt</th>
+						<th class="col">Date de fin d'emprunt</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if (devicesList.length) { %>
+                        <% devicesList.forEach((device) => { %>
+                            <tr>
+                                <td><%= device.name %></td>
+                                <td><%= device.version %></td>
+                                <td><%= device.ref %></td>
+                                <td><%= device.borrower.firstName %> <%= device.borrower.lastName %></td>
+                                <td><%= device.borrowingStartDate %></td>
+                                <td><%= device.borrowingEndDate %></td>
+                            </tr>
+                        <% }); %> 
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+
+
+<!-- NEW DEVICE CREATION POPUP/MODAL -->
+<%- include('device_creation_popup.ejs') -%>
+
+<!-- DELETE DEVICE POPUP/MODAL -->
+<%- include('delete_device_popup.ejs') -%>
+
+
+<footer class="footer mt-auto py-3">
+    <div class="container">
+        <span class="text-muted">Locamat, 2020</span>
+    </div>
+</footer>
+
+<script>
+	const button = document.getElementById('logoutBTN')
+	button.addEventListener('click', (err)=>{
+		console.log("clicked")
+		document.cookie="token="
+		location.reload()
+	})
 </script>
+
 <%- include('footer') -%>
+
