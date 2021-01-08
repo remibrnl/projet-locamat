@@ -99,12 +99,14 @@
                                         Emprunteur
                                     <% } %>
                                 </td>
-                                <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                                <div class="btn-group" role="group" aria-label="Basic mixed styles example"></div>
                                     <button class="btn btn-outline-info" data-toggle="modal" data-target="#userBorrowedDevicesModal">Matériels empruntés</button>
                                     <button class="btn btn-outline-warning" data-toggle="modal" data-target="#userModifyModal">Modifier</button>
+                                    <!--<button class="btn btn-outline-danger" onclick="myFunction()" id="delBTN">Supprimer</button>-->
                                     <button class="btn btn-outline-danger" data-toggle="modal" data-target="#userDeleteModal">Supprimer</button>
                                 </div>
-                                
+                                <!-- USER DELETE POPUP -->
+                                <%- include('user_delete_popup.ejs'), {searchUser: searchUser} -%>
                             </tr>
                         <tbody>
                     <% } else { %>
@@ -142,10 +144,6 @@
 <!-- USER MODIFY POPUP -->
 <%- include('modify_user_popup.ejs') -%>
 
-<!-- USER DELETE POPUP -->
-<%- include('delete_user_popup.ejs') -%>
-
-
 <script>
     const button = document.getElementById('logoutBTN')
     button.addEventListener('click', (err)=>{
@@ -154,6 +152,13 @@
         location.reload()
     })
 
+</script>
+
+<script> 
+    function myFunction(){
+
+        alert('utilisateur supprimé')
+    }
 </script>
 
 <script src="https://kit.fontawesome.com/88c7164422.js" crossorigin="anonymous"></script>

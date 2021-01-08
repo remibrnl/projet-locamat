@@ -21,7 +21,7 @@ router.get('/',authenticateToken,(req,res)=>{
 })
 
 router.post('/',authenticateToken,(req,res)=>{
-
+  res.cookie('searchID',req.body.searchId)
   var devicesList = [];
 
   users.findAll((err, userList) => {
@@ -102,7 +102,18 @@ router.post('/createUser',authenticateToken,(req,res)=>{
   })
 })
 
-
+router.post('/deleteUser',(req,res,next)=>{
+  console.log('POST',req.body.searchUser) 
+  users.findByID(req.body.searchUser, (err, user) => {
+    if(err){
+      next(err);
+      return
+    }
+    users.remove(user,(err,result)=>{
+      res.redirect('/adminUsers')
+    })
+  })
+})
 
 function authenticateToken(req, res, next) { 
   const cookieToken = req.cookies 
