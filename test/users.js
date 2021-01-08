@@ -8,7 +8,7 @@ var getConnection = require('../db/connectionTools.js').getConnection;
 var connection;
 
 var dummyUser = {
-    id: 21700359,
+    id: '21700359',
     lastName: 'Doe',
     firstName: 'John',
     mail: 'johndoe@mail.fr',
