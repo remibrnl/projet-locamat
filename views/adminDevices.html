@@ -66,18 +66,21 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <% for(let i=0 ; i < devicesList.length ; i++) {%>
+                    <% devicesList.forEach((device) => {%>
                         <tr>
-                            <td><%= devicesList[i].name %></td>
-                            <td><%= devicesList[i].version %></td>
-                            <td><%= devicesList[i].ref %></td>                            
-                            <td><%= devicesList[i].borrowerID %> </td>
-                            <td><%= devicesList[i].borrowingStartDate %></td>
-                            <td><%= devicesList[i].borrowingEndDate %></td>
-                            <td><button class="btn btn-outline-info" data-toggle="modal" data-target="#deviceEditionModal">Modifier</button></td>
-                            <td><button class="btn btn-outline-danger" data-toggle="modal" data-target="#deviceDeleteModal">Supprimer</button></td>
+                            <td><%= device.name %></td>
+                            <td><%= device.version %></td>
+                            <td><%= device.ref %></td>                            
+                            <td><%= device.borrowerID %> </td>
+                            <td><%= device.borrowingStartDate %></td>
+                            <td><%= device.borrowingEndDate %></td>
+                            <td><button class="btn btn-outline-info" data-toggle="modal" data-target="#deviceEditionModal-<%= device.ref %>" >Modifier</button></td>
+                            <td><button class="btn btn-outline-danger" data-toggle="modal" data-target="#deviceDeleteModal-<%= device.ref %>" >Supprimer</button></td>
                         </tr>
-                    <% }; %> 
+
+                        <%- include('delete_device_popup.ejs', {ref: device.ref}) -%>
+
+                    <% }); %> 
                 </tbody>
             </table>
         </div>
@@ -89,9 +92,6 @@
 
 <!-- NEW DEVICE CREATION POPUP/MODAL -->
 <%- include('device_creation_popup.ejs') -%>
-
-<!-- DELETE DEVICE POPUP/MODAL -->
-<%- include('delete_device_popup.ejs') -%>
 
 <!-- NEW DEVICE EDITION POPUP/MODAL -->
 <%- include('device_edition_popup.ejs') -%>

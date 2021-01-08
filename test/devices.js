@@ -119,7 +119,6 @@ describe('db/devices.js', () => {
                 }
 
                 try {
-                    console.log(result);
                     assert(result.some((element) => {
                         return element.borrowerID == dummyUser.id;
                     }), 'the dummy is in the result array');
