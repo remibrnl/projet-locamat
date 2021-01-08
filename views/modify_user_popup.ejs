@@ -10,23 +10,18 @@
 			<div class="modal-body">
                 <form action="/adminDevices/userModify" method="POST">
                     <div class="form-group">
-						<label for="newId">id</label>
-						<input type="text" class="form-control" id="id" name="id" placeholder="NH27178">
-					</div>
-
-                    <div class="form-group">
 						<label for="newLastName">Last name</label>
-						<input type="text" class="form-control" id="lastName" name="lastName" placeholder="Hülkenberg">
+						<input type="text" class="form-control" id="lastName" name="lastName" placeholder="Hülkenberg" required>
                     </div>
                     
 					<div class="form-group">
 							<label for="newFirstName">first name</label>
-							<input type="text" class="form-control" id="firstName" name="firstName" placeholder="Nicolas">
+							<input type="text" class="form-control" id="firstName" name="firstName" placeholder="Nicolas" required>
 					</div>
 					
 					<div class="form-group">
 						<label for="newMail">mail</label>
-						<input type="mail" class="form-control" id="mail" name="mail" placeholder="nicolas.hulkenberg@mail.com">
+						<input type="mail" class="form-control" id="mail" name="mail" placeholder="nicolas.hulkenberg@mail.com" required>
 					</div>
 					
 					<div class="form-check">
@@ -40,7 +35,7 @@
                     
                     <div class="form-group">
 						<label for="newEmail">password</label>
-						<input type="password" class="form-control" id="newPassword" name="newPassword" placeholder="password">
+						<input type="password" class="form-control" id="newPassword" name="newPassword" placeholder="password" required>
                     </div>
 
 					<div class="modal-footer">

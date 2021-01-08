@@ -53,8 +53,28 @@ router.post('/',authenticateToken,(req,res)=>{
 })
 
 router.post('/userModify',authenticateToken,(req,res)=>{
-  //var updateUser = [] 
-  //if(req.body.id == undefined) 
+  var updateUser ={
+    id: req.body.id,
+    lastName: req.body.lastName,
+    firstName: req.body.firstName,
+    mail: req.body.mail,
+    isAdmin: req.body.isAdmin,
+    hashedPassword: req.body.hashedPassword
+  }
+
+  users.update(updateUser,(err,result)=>{
+    if(err){
+      throw err
+    }
+    devices.findByUser(req.body.id,(err,result)=>{
+      if(err) {
+        next(err);
+        return
+      }
+      message = 'modification réussi'
+      res.render('adminUsers',{title: 'Locamat : Users administration', searchUser: user, message: message, connectedUser: req.user, userList: userList, devicesList: result})
+    })
+  })
 })
 
 
