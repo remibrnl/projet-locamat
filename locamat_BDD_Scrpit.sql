@@ -42,8 +42,8 @@ CREATE TABLE `deviceTable` (
   `version` varchar(128) DEFAULT NULL,
   `pictureUrl` VARCHAR(2083) DEFAULT NULL,
   `borrowerID` varchar(128) DEFAULT NULL,
-  `borrowingStartDate` DATE DEFAULT NULL, 
-  `borrowingEndDate` DATE DEFAULT NULL, 
+  `borrowingStartDate` DATETIME DEFAULT NULL, 
+  `borrowingEndDate` DATETIME DEFAULT NULL, 
   PRIMARY KEY(`ref`),
   FOREIGN KEY(`borrowerID`) REFERENCES usertable(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

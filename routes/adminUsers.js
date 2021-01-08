@@ -52,6 +52,11 @@ router.post('/',authenticateToken,(req,res)=>{
   })
 })
 
+router.post('/userModify',authenticateToken,(req,res)=>{
+  //var updateUser = [] 
+  //if(req.body.id == undefined) 
+})
+
 
 function authenticateToken(req, res, next) { 
   const cookieToken = req.cookies 
