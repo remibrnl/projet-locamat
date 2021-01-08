@@ -9,7 +9,7 @@
     <div class="collapse navbar-collapse">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a href="" class="nav-link">Matériel <span class="sr-only">(actuel)</span></a>
+                <a href="/" class="nav-link">Matériel <span class="sr-only">(actuel)</span></a>
             </li>
             <% if(user.isAdmin ==true) {%> 
                 <li class="nav-item dropdown">
@@ -37,7 +37,7 @@
             <%= user.firstName %> <%= user.lastName %>
         </span>
         <form class="form-inline">
-            <button  class="btn btn-outline-danger my-2 my-sm-0" id="logoutBTN">Déconnection</button>
+            <button  class="btn btn-outline-danger my-2 my-sm-0" id="logoutBTN">Déconnexion</button>
         </form>
         
     </div>
@@ -57,7 +57,7 @@
                             <td>
                                 <strong>
                                     <span class="glyphicon glyphicon-asterisk text-primary"></span>
-                                    Identificacion                                                
+                                    Identification                                                
                                 </strong>
                             </td>
                             <td class="text-primary">
@@ -68,7 +68,7 @@
                             <td>
                                 <strong>
                                     <span class="glyphicon glyphicon-user  text-primary"></span>    
-                                    Name                                                
+                                    Nom                                                
                                 </strong>
                             </td>
                             <td class="text-primary">
@@ -79,7 +79,7 @@
                             <td>
                                 <strong>
                                     <span class="glyphicon glyphicon-cloud text-primary"></span>  
-                                    Lastname                                                
+                                    Prenom                                                
                                 </strong>
                             </td>
                             <td class="text-primary">
@@ -120,8 +120,8 @@
         </div>
     </div>
 
-<button class="btn btn-primary" data-toggle="modal" data-target="#updateUserModal">update</button>
-<button class="btn btn-primary" data-toggle="modal" data-target="#changePasswordModal">change password</button>
+<button class="btn btn-primary" data-toggle="modal" data-target="#updateUserModal">Modifier</button>
+<button class="btn btn-primary" data-toggle="modal" data-target="#changePasswordModal">Changer de mot de passe</button>
 
 </div> <!-- /container-->
 
