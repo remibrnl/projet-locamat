@@ -8,7 +8,7 @@
     <div class="collapse navbar-collapse">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a href="" class="nav-link">Matériel <span class="sr-only">(actuel)</span></a>
+                <a href="/" class="nav-link">Matériel <span class="sr-only">(actuel)</span></a>
             </li>
             <% if(user.isAdmin ==true) {%> 
                 <li class="nav-item dropdown active">
@@ -47,7 +47,6 @@
 
 	<div class="admin-buttons">
 		<button class="btn btn-success" data-toggle="modal" data-target="#createDeviceModal">Ajout un matériel</button>
-		<button class="btn btn-primary" data-toggle="modal" data-target="#createUserModal">Ajouter un utilisateur</button>
 	</div>
 	
 	<div class="card shadow">
@@ -61,25 +60,24 @@
                         <th class="col">Nom</th>
                         <th class="col">Version</th>
                         <th class="col">Référence</th>
-                        <th class="col">Numéro</th>
                         <th class="col">Emprunteur</th>
                         <th class="col">Date de début d'emprunt</th>
 						<th class="col">Date de fin d'emprunt</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <% if (devicesList.length) { %>
-                        <% devicesList.forEach((device) => { %>
-                            <tr>
-                                <td><%= device.name %></td>
-                                <td><%= device.version %></td>
-                                <td><%= device.ref %></td>
-                                <td><%= device.borrower.firstName %> <%= device.borrower.lastName %></td>
-                                <td><%= device.borrowingStartDate %></td>
-                                <td><%= device.borrowingEndDate %></td>
-                            </tr>
-                        <% }); %> 
-                    <% } %>
+                    <% for(let i=0 ; i < devicesList.length ; i++) {%>
+                        <tr>
+                            <td><%= devicesList[i].name %></td>
+                            <td><%= devicesList[i].version %></td>
+                            <td><%= devicesList[i].ref %></td>                            
+                            <td><%= devicesList[i].borrowerID %> </td>
+                            <td><%= devicesList[i].borrowingStartDate %></td>
+                            <td><%= devicesList[i].borrowingEndDate %></td>
+                            <td><button class="btn btn-outline-info" data-toggle="modal" data-target="#deviceEditionModal">Modifier</button></td>
+                            <td><button class="btn btn-outline-danger" data-toggle="modal" data-target="#deviceDeleteModal">Supprimer</button></td>
+                        </tr>
+                    <% }; %> 
                 </tbody>
             </table>
         </div>
@@ -94,6 +92,9 @@
 
 <!-- DELETE DEVICE POPUP/MODAL -->
 <%- include('delete_device_popup.ejs') -%>
+
+<!-- NEW DEVICE EDITION POPUP/MODAL -->
+<%- include('device_edition_popup.ejs') -%>
 
 
 <footer class="footer mt-auto py-3">

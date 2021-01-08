@@ -40,7 +40,7 @@ function findByRef(ref, callback) {
 function findAll(callback) {
     var connection = getConnection();
     
-    connection.query('SELECT * FROM deviceTable ;', (err, results) => {
+    connection.query('SELECT * FROM deviceTable ORDER BY ref;', (err, results) => {
         if(err) {
             callback(err);
             return;
@@ -73,7 +73,7 @@ function findAll(callback) {
 function findByUser(user, callback) {
     var connection = getConnection();
     
-    connection.query('SELECT * FROM deviceTable where borrowerID = ? ;', [user.id] , (err, results) => {
+    connection.query('SELECT * FROM deviceTable where borrowerID = ? ORDER BY ref;', [user.id] , (err, results) => {
         if(err) {
             callback(err);
             return;
