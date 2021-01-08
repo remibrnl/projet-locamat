@@ -74,9 +74,11 @@
                             <td><%= device.borrowerID %> </td>
                             <td><%= device.borrowingStartDate %></td>
                             <td><%= device.borrowingEndDate %></td>
-                            <td><button class="btn btn-outline-info" data-toggle="modal" data-target="#deviceEditionModal-<%= device.ref %>" >Modifier</button></td>
+                            <td><button class="btn btn-outline-info" data-toggle="modal" data-target="#updateDeviceModal-<%= device.ref %>" >Modifier</button></td>
                             <td><button class="btn btn-outline-danger" data-toggle="modal" data-target="#deviceDeleteModal-<%= device.ref %>" >Supprimer</button></td>
                         </tr>
+
+                        <%- include('update_device_popup.ejs', {device: device}) -%>
 
                         <%- include('delete_device_popup.ejs', {ref: device.ref}) -%>
 

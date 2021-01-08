@@ -39,6 +39,14 @@ router.post('/deleteDevice', (req, res, next) => {
 	});
 });
 
+
+router.post('/updateDevice', (req, res, next) => {
+	var device = JSON.parse(Object.keys(req.body)[0]);
+	console.log(req.body);
+
+	res.redirect('/adminDevices');
+});
+
 function authenticateToken(req, res, next) {
 		const cookieToken = req.cookies 
 		const token = cookieToken.token
