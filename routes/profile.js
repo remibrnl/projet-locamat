@@ -6,35 +6,26 @@ var bcrypt = require('bcrypt')
 var users = require('../db/users')
 var authenticateToken = require('../routes/authenticateToken.js');
 
-var connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'locamat'
-})
-
 router.get('/',authenticateToken,(req,res) =>{
-    connection.query("SELECT * FROM userTable where id = ?",[req.user.id],(err,result)=>{
+    users.findByID(req.user.id,(err,result)=>{
+      if(err){
+        next(err)
+        return 
+      }
         console.log(result)
-        var user = {
-            id: -1, 
-            lastName: "last name",
-            firstName: "first name",
-            mail: "mail@mail.com"
-        }
         if(result == null){
             res.sendStatus(404)    
         }
         else{
             var user = {
-                id: result[0].id,
-                lastName: result[0].lastName, 
-                firstName: result[0].firstName,
-                mail: result[0].mail,
-                isAdmin: result[0].isAdmin
+                id: result.id,
+                lastName: result.lastName, 
+                firstName: result.firstName,
+                mail: result.mail,
+                isAdmin: result.isAdmin
             }
     
-            res.render('profile',{title: 'Locamat : User profile', user: user, message: req.message})
+            res.render('profile',{title: 'Locamat : User profile', user: result, message: req.message})
         }
         
     })
@@ -74,15 +65,18 @@ router.post('/updateUser',authenticateToken,(req,res,next)=>{
   }
   users.checkValues(user,(result)=>{
     if(result != undefined){
-      res.render('profile',{title: 'Locamat : User profile', user: user, message: result.message})
-    }
-    users.update(user,(err,result)=>{
-      if(err){
-        next(err)
-        return
-      }
+      res.setHeader('message' , result.message)
       res.redirect('/profile')
-    })
+    }
+    else{
+      users.update(user,(err,result)=>{
+        if(err){
+          next(err)
+          return
+        }
+        res.redirect('/profile')
+      })
+    }
   })
 })
 

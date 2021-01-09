@@ -31,7 +31,7 @@ router.post('/', async(req, res, next)=>{
                         return;
                     }
         
-                    res.redirect('/login');
+                    res.redirect('/register');
                 })
             }
             res.render('register', { title: 'Locamat : Register', message: result.message});
