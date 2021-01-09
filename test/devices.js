@@ -278,6 +278,11 @@ describe('db/devices.js', () => {
 
                     // verify the current dummy (same ref)
                     connection.query('SELECT * FROM deviceTable WHERE ref = ? ;', dummyDevice.ref, (err, results) => {
+                        if (err) {
+                            done(err);
+                            return;
+                        }
+
                         try {
                             assert.notDeepEqual(results[0], dummyDevice, 'the device has been changed');
                             done();
