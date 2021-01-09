@@ -16,9 +16,9 @@ var dummyUser = {
 };
 
 var dummyDevice = {
-    ref: 'A459B',
+    ref: 'AB123',
     name: 'iPhone',
-    version: '12 Pro',
+    version: 'V12',
     pictureUrl: 'img/phones/apple-iphone12-pro.png',
     borrowerID: dummyUser.id,
     borrowingStartDate: new Date('2021-01-01 12:00:00'),
@@ -26,7 +26,7 @@ var dummyDevice = {
 };
 
 var invalidContent = {
-    ref: 'A459',
+    ref: 'A459#',
     name: 'oui@',
     version: '#A2',
 };
@@ -297,6 +297,7 @@ describe('db/devices.js', () => {
 
             it('valid device', (done) => {
                 devices.checkValues(dummyDevice, (result) => {
+                    console.log(result);
                     try {
                         assert.equal(result, undefined, 'values validated');
                         done();
@@ -309,7 +310,7 @@ describe('db/devices.js', () => {
 
             describe('content', () => {
                 it('ref', (done) => {
-                    let tested = Object.assign({}, dummyDevice); // valid fields
+                    var tested = Object.assign({}, dummyDevice); // valid fields
 
                     tested.ref = invalidContent.ref; // invalid field
 
@@ -317,7 +318,7 @@ describe('db/devices.js', () => {
                 });
 
                 it('name', (done) => {
-                    let tested = Object.assign({}, dummyDevice); // valid fields
+                    var tested = Object.assign({}, dummyDevice); // valid fields
 
                     tested.name = invalidContent.name; // invalid field
 
@@ -326,7 +327,7 @@ describe('db/devices.js', () => {
                 });
 
                 it('version', (done) => {
-                    let tested = Object.assign({}, dummyDevice); // valid fields
+                    var tested = Object.assign({}, dummyDevice); // valid fields
 
                     tested.version = invalidContent.version; // invalid field
 
@@ -337,7 +338,7 @@ describe('db/devices.js', () => {
 
             describe('length', () => {
                 it('ref', (done) => {
-                    let tested = Object.assign({}, dummyDevice); // valid fields
+                    var tested = Object.assign({}, dummyDevice); // valid fields
 
                     tested.ref = invalidLength.ref; // invalid field
 
@@ -345,7 +346,7 @@ describe('db/devices.js', () => {
                 });
 
                 it('name', (done) => {
-                    let tested = Object.assign({}, dummyDevice); // valid fields
+                    var tested = Object.assign({}, dummyDevice); // valid fields
 
                     tested.name = invalidLength.name; // invalid field
                     
@@ -353,7 +354,7 @@ describe('db/devices.js', () => {
                 });
 
                 it('version', (done) => {
-                    let tested = Object.assign({}, dummyDevice); // valid fields
+                    var tested = Object.assign({}, dummyDevice); // valid fields
 
                     tested.version = invalidLength.version; // invalid field
 

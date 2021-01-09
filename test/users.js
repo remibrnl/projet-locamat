@@ -290,7 +290,7 @@ describe('db/user.js', () => {
 
             describe('content', () => {
                 it('id', (done) => {
-                    let tested = Object.assign({}, dummyUser); // valid fields
+                    var tested = Object.assign({}, dummyUser); // valid fields
 
                     tested.id = invalidContent.id; // invalid field
 
@@ -298,7 +298,7 @@ describe('db/user.js', () => {
                 });
 
                 it('firstname', (done) => {
-                    let tested = Object.assign({}, dummyUser); // valid fields
+                    var tested = Object.assign({}, dummyUser); // valid fields
 
                     tested.firstName = invalidContent.firstName; // invalid field
 
@@ -307,7 +307,7 @@ describe('db/user.js', () => {
                 });
 
                 it('lastname', (done) => {
-                    let tested = Object.assign({}, dummyUser); // valid fields
+                    var tested = Object.assign({}, dummyUser); // valid fields
 
                     tested.lastName = invalidContent.lastName; // invalid field
 
@@ -318,7 +318,7 @@ describe('db/user.js', () => {
 
             describe('length', () => {
                 it('id', (done) => {
-                    let tested = Object.assign({}, dummyUser); // valid fields
+                    var tested = Object.assign({}, dummyUser); // valid fields
 
                     tested.id = invalidLength.id; // invalid field
 
@@ -326,7 +326,7 @@ describe('db/user.js', () => {
                 });
 
                 it('firstname', (done) => {
-                    let tested = Object.assign({}, dummyUser); // valid fields
+                    var tested = Object.assign({}, dummyUser); // valid fields
 
                     tested.firstName = invalidLength.firstName; // invalid field
                     
@@ -334,7 +334,7 @@ describe('db/user.js', () => {
                 });
 
                 it('lastname', (done) => {
-                    let tested = Object.assign({}, dummyUser); // valid fields
+                    var tested = Object.assign({}, dummyUser); // valid fields
 
                     tested.lastName = invalidLength.lastName; // invalid field
 
@@ -344,7 +344,7 @@ describe('db/user.js', () => {
 
             describe('mail', () => {
                 it('@ character', (done) => {
-                    let tested = Object.assign({}, dummyUser); // valid fields
+                    var tested = Object.assign({}, dummyUser); // valid fields
 
                     tested.mail = invalidMailNoAt; // invalid field
 
@@ -360,7 +360,7 @@ describe('db/user.js', () => {
                 });
 
                 it('space', (done) => {
-                    let tested = Object.assign({}, dummyUser); // valid fields
+                    var tested = Object.assign({}, dummyUser); // valid fields
 
                     tested.mail = invalidMailSpace; // invalid field
 
