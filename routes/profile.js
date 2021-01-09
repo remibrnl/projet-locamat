@@ -75,17 +75,17 @@ router.post('/passwordChange',authenticateToken, async(req,res)=>{
       isAdmin: req.user.isAdmin,
       hashedPassword: newHashedPassword
     }
-    users.checkValues(user,(err,result)=>{
-      users.update(user,(err,result)=>{
-        if(result == null){
-          console.log(result)
-          res.sendStatus(404)    
-        }
-        else{
-          res.redirect('/profile')
-        }
-      })
+    
+    users.update(user,(err,result)=>{
+      if(result == null){
+        console.log(result)
+        res.sendStatus(404)    
+      }
+      else{
+        res.redirect('/profile')
+      }
     })
+    
   }
   else{
     res.redirect('/profile')

@@ -65,12 +65,19 @@ router.post('/updateDevice', (req, res, next) => {
             borrowingEndDate: result.borrowingEndDate
 		}
 
-		devices.update(updateDevice,(err,result)=>{
-			if(err){
-				next(err)
-				return
+		devices.checkValues(updateDevice,(result)=>{
+			if(result == undefined){
+				devices.update(updateDevice,(err,result)=>{
+					if(err){
+						next(err)
+						return
+					}
+					res.redirect('/adminDevices');
+				})
 			}
-			res.redirect('/adminDevices');
+			else{
+				res.redirect('/adminDevices');
+			}
 		})
 	})
 });
@@ -91,7 +98,8 @@ router.post('/createDevice',authenticateToken,(req,res,next)=>{
 	console.log(newDevice)
 
 	devices.checkValues(newDevice,(result)=>{
-		if(result != undefined){
+		console.log(result)
+		if(result == undefined){
 			devices.create(newDevice,(err,result)=>{
 				if(err){
 					next(err)
