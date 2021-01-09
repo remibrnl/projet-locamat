@@ -16,11 +16,14 @@ Il faut avoir un serveur HTTP et un serveur MySQL. Nous utilisons pour cela Easy
 6: cliquer sur "Choisir un fichier" et choisir "locamat_BDD_Script" qui se trouve dans le dossier "projet-locamat"
 
 -lancer le serveur web
-7: Dans le dossier "projet-locamat" lancer le fichier de commande "START"
+7: Dans le dossier "projet-locamat" lancer la commande "npm start"
 
 -Accéder au site
 8: Depuis un navigateur rentrer l'URL "localhost:3000"
 9: pour vous connecter utilisez un des identifiants dans le fichier "usersLocamat.txt" qui se trouve dans le dossier "projet-locamat"
+
+-Lancement des tests
+Utiliser la commande "npm run test", pour avoir la couverture utiliser "npm run coverage"
 
 
 Accès au GIT: https://github.com/remibrnl/projet-locamat
