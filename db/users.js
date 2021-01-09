@@ -157,11 +157,31 @@ function update(user, callback) {
     })
 }
 
+function checkValues(user,callback) {
+    var regexAlphaNum = /^[a-z0-9-\'_\.,:\(\)&\[\]\/+=\?#@ \xC0-\xFF]+$/i
+    var regexMail = /^[^@\s]+@[^@\s]+\.[^@\s]+$/i
+    var lastNameLength = user.lastName.length 
+    var firstNameLength = user.firstName.length
+    var idLength = user.id.length
+    if(!user.lastName.match(regexAlphaNum) || !user.firstName.match(regexAlphaNum) || !user.id.match(regexAlphaNum) || !user.mail.match(regexMail)){
+        callback("Caractère interdit, n'utilisez pas de caractères spéciaux")
+        return 
+    }
+    else if(!(lastNameLength <= 30) || !(lastNameLength >= 1) || !(firstNameLength <= 30) || !(firstNameLength >= 1) || !(idLength == 7)){
+        callback("Taille d'un des champs incorrect")
+        return 
+    }
+
+    callback() 
+    
+}
+
 module.exports = {
     findByEmail: findByEmail,
     findByID: findByID,
     findAll: findAll,
     create: create,
     remove: remove,
-    update: update
+    update: update, 
+    checkValues: checkValues
 }
