@@ -156,7 +156,6 @@ function update(device, callback) {
 }
 
 function checkValues(device, callback){
-    // console.log('checkValue device : ',device)
 
     var regexAlphaNum = /^[a-zA-Z0-9]*$/i
     var nameLength = device.name.length

@@ -297,7 +297,6 @@ describe('db/devices.js', () => {
 
             it('valid device', (done) => {
                 devices.checkValues(dummyDevice, (result) => {
-                    console.log(result);
                     try {
                         assert.equal(result, undefined, 'values validated');
                         done();
