@@ -163,6 +163,7 @@ function checkValues(user,callback) {
     var lastNameLength = user.lastName.length 
     var firstNameLength = user.firstName.length
     var idLength = user.id.length
+
     if(!user.lastName.match(regexAlphaNum) || !user.firstName.match(regexAlphaNum) || !user.id.match(regexAlphaNum) || !user.mail.match(regexMail)){
         callback(
             {
@@ -171,7 +172,7 @@ function checkValues(user,callback) {
             })
         return 
     }
-    else if(!(lastNameLength <= 30) || !(lastNameLength >= 1) || !(firstNameLength <= 30) || !(firstNameLength >= 1) || !(idLength == 7)){
+    else if((!(lastNameLength <= 30) || !(lastNameLength >= 1)) || (!(firstNameLength <= 30) || !(firstNameLength >= 1)) || !(idLength == 7)){
         callback(
             {
                 error: 'length', 

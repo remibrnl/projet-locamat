@@ -1,5 +1,4 @@
 var assert = require('chai').assert;
-//var expect = require('chai').expect;
 
 var devices = require('../db/devices.js');
 var getConnection = require('../db/connectionTools.js').getConnection;
@@ -8,7 +7,7 @@ var getConnection = require('../db/connectionTools.js').getConnection;
 var connection;
 
 var dummyUser = {
-    id: '21700359',
+    id: 'J217003',
     lastName: 'Doe',
     firstName: 'John',
     mail: 'johndoe@mail.fr',
@@ -17,15 +16,23 @@ var dummyUser = {
 };
 
 var dummyDevice = {
-    ref: '4594132',
+    ref: 'A459',
     name: 'iPhone 12 Pro',
     version: '2',
     pictureUrl: 'img/phones/apple-iphone12-pro.png',
     borrowerID: dummyUser.id,
     borrowingStartDate: new Date('2021-01-01 12:00:00'),
     borrowingEndDate: new Date('2021-02-20 20:30:00')
-    //borrowingStartDate: '2021-01-01 12:30:00.000000',
-    //borrowingEndDate: '2021-01-10 15:00:00.000000'
+};
+
+var invalidDevice = {
+    ref: 'A45@94132',
+    name: 'iPhone 12 Pro',
+    version: '2&',
+    pictureUrl: 'img/phones/apple-iphone12-pro.png',
+    borrowerID: '456#B',
+    borrowingStartDate: new Date('2021-01-01 12:00:00'),
+    borrowingEndDate: new Date('2021-02-20 20:30:00')
 };
 
 // Dummy device manual insertion
@@ -63,7 +70,7 @@ describe('db/devices.js', () => {
             }
 
             connection.end(done);
-        })
+        });
     });
 
     describe('finding', () => {
@@ -108,8 +115,8 @@ describe('db/devices.js', () => {
                 catch (err) {
                     done(err);
                 }
-            })
-        })
+            });
+        });
 
         it('findByUser()', (done) => {
             devices.findByUser(dummyUser, (err, result) => {
@@ -199,7 +206,7 @@ describe('db/devices.js', () => {
             else {
                 done();
             }
-        })
+        });
 
         it('remove()', (done) => {
             devices.remove(dummyDevice, (err) => {
@@ -218,11 +225,11 @@ describe('db/devices.js', () => {
                         done(err);
                     }
 
-                })
+                });
 
             });
-        })
-    })
+        });
+    });
 
     describe('updating', () => {
         // Insertion of the dummy device before each updating tests
@@ -251,9 +258,9 @@ describe('db/devices.js', () => {
                         done(err);
                     }
 
-                })
-            })
-        })
-    })
+                });
+            });
+        });
+    });
 
 });

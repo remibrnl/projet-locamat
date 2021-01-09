@@ -8,13 +8,28 @@ var getConnection = require('../db/connectionTools.js').getConnection;
 var connection;
 
 var dummyUser = {
-    id: '21700359',
+    id: 'J217003',
     lastName: 'Doe',
     firstName: 'John',
     mail: 'johndoe@mail.fr',
     isAdmin: 1,
     hashedPassword: '$2b$10$.9x25V02d./qi1q9SE3iLe1dk9ndn.7PdL2DVMVXO3TncyLeuVayi'
 };
+
+var invalidContent = {
+    id: '2170@0359',
+    lastName: 'Do&e',
+    firstName: 'J#ohn'
+};
+
+var invalidLength = {
+    id: '217',
+    lastName: 'Doeilpazertyuiopqsdfghjklmwxcvbna',
+    firstName: 'Johnazertyuiopqsdfghjklmwxcvbnazert'
+};
+
+var invalidMailNoAt = 'johndoemail.fr';
+var invalidMailSpace = 'johndo email.fr';
 
 // Dummy manual insertion
 function insertDummy(done) {
@@ -26,7 +41,29 @@ function removeDummy(done) {
     connection.query('DELETE FROM userTable WHERE id = ? ;', dummyUser.id, done);
 }
 
+function checkContent(tested, done) {
+    users.checkValues(tested, (result) => {
+        try {
+            assert.deepEqual(result.error, 'content', 'content error detected');
+            done();
+        }
+        catch (err) {
+            done(err);
+        }
+    });
+}
 
+function checkLength(tested, done) {
+    users.checkValues(tested, (result) => {
+        try {
+            assert.deepEqual(result.error, 'length', 'length error detected');
+            done();
+        }
+        catch (err) {
+            done(err);
+        }
+    });
+}
 
 describe('db/user.js', () => {
 
@@ -34,10 +71,10 @@ describe('db/user.js', () => {
     before((done) => {
         connection = getConnection();
         done();
-    })
+    });
     after((done) => {
         connection.end(done);
-    })
+    });
 
     describe('finding', () => {
 
@@ -176,7 +213,7 @@ describe('db/user.js', () => {
             else {
                 done();
             }
-        })
+        });
 
         it('remove()', (done) => {
             users.remove(dummyUser, (err) => {
@@ -195,11 +232,11 @@ describe('db/user.js', () => {
                         done(err);
                     }
 
-                })
+                });
 
             });
-        })
-    })
+        });
+    });
 
     describe('updating', () => {
         // Insertion of the dummy user before each updating tests
@@ -228,9 +265,112 @@ describe('db/user.js', () => {
                         done(err);
                     }
 
-                })
-            })
-        })
-    })
+                });
+            });
+        });
+    });
+
+    describe.only('checkValues()', () => {
+        it('valid user', (done) => {
+            users.checkValues(dummyUser, (result) => {
+                
+                try {
+                    assert.equal(result, undefined, 'values validated');
+                    done();
+                }
+                catch (err) {
+                    done(err);
+                }
+            });
+        });
+
+        describe('content', () => {
+            it('id', (done) => {
+                let tested = Object.assign({}, dummyUser); // valid fields
+
+                tested.id = invalidContent.id; // invalid field
+
+                checkContent(tested, done);
+            });
+
+            it('firstname', (done) => {
+                let tested = Object.assign({}, dummyUser); // valid fields
+
+                tested.firstName = invalidContent.firstName; // invalid field
+
+                checkContent(tested, done);
+
+            });
+
+            it('lastname', (done) => {
+                let tested = Object.assign({}, dummyUser); // valid fields
+
+                tested.lastName = invalidContent.lastName; // invalid field
+
+                checkContent(tested, done);
+
+            });
+        });
+
+        describe('length', () => {
+            it('id', (done) => {
+                let tested = Object.assign({}, dummyUser); // valid fields
+
+                tested.id = invalidLength.id; // invalid field
+
+                checkLength(tested, done);
+            });
+
+            it('firstname', (done) => {
+                let tested = Object.assign({}, dummyUser); // valid fields
+
+                tested.firstName = invalidLength.firstName; // invalid field
+                
+                checkLength(tested, done);
+            });
+
+            it('lastname', (done) => {
+                let tested = Object.assign({}, dummyUser); // valid fields
+
+                tested.lastName = invalidLength.lastName; // invalid field
+
+                checkLength(tested, done);
+            });
+        });
+
+        describe('mail', () => {
+            it('@ character', (done) => {
+                let tested = Object.assign({}, dummyUser); // valid fields
+
+                tested.mail = invalidMailNoAt; // invalid field
+
+                users.checkValues(tested, (result) => {
+                    try {
+                        assert.deepEqual(result.error, 'content', 'mail content error detected');
+                        done();
+                    }
+                    catch (err) {
+                        done(err);
+                    }
+                });
+            });
+
+            it('space', (done) => {
+                let tested = Object.assign({}, dummyUser); // valid fields
+
+                tested.mail = invalidMailSpace; // invalid field
+
+                users.checkValues(tested, (result) => {
+                    try {
+                        assert.deepEqual(result.error, 'content', 'mail content error detected');
+                        done();
+                    }
+                    catch (err) {
+                        done(err);
+                    }
+                });
+            });
+        });
+    });
 
 });
