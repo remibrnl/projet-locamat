@@ -158,11 +158,12 @@ function update(device, callback) {
 function checkValues(device, callback){
 
     var regexAlphaNum = /^[a-zA-Z0-9]*$/i
+    var regexVersion = /^[A-Za-z0-9\s]*$/i
     var nameLength = device.name.length
     var versionLength = device.version.length
     var refLength = device.ref.length
 
-    if(!device.name.match(regexAlphaNum) || !device.version.match(regexAlphaNum) || !device.ref.match(regexAlphaNum)){
+    if(!device.name.match(regexAlphaNum) || !device.version.match(regexVersion) || !device.ref.match(regexAlphaNum)){
         callback(
             {
                 error: 'content', 

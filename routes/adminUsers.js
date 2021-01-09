@@ -8,6 +8,10 @@ var authenticateToken = require('../routes/authenticateToken.js');
 
 
 router.get('/',authenticateToken,(req,res,next)=>{
+  if(req.user.isAdmin != true){
+    res.sendStatus(403)
+    return
+  }
   users.findAll((err, userList) => {
     if (err) {
       next(err);

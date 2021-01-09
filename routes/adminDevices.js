@@ -7,7 +7,10 @@ var devices = require('../db/devices.js');
 var authenticateToken = require('../routes/authenticateToken.js');
 
 router.get('/',authenticateToken,(req,res,next)=>{
-
+	if(req.user.isAdmin != true){
+		res.sendStatus(403)
+		return
+	}
 	devices.findAll((err, result) => {
 		if (err) {
 			next(err);

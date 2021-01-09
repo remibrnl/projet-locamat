@@ -25,8 +25,7 @@ router.post('/', (req, res, next) => {
   
   users.findByEmail(req.body.mail, (err, user) => {
     if (err) {
-      next(err);
-      return;
+      res.render('register',{ message: 'You have to register first' }); 
     }
 
     if (user === null) {
