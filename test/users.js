@@ -67,286 +67,219 @@ function checkLength(tested, done) {
 
 describe('db/user.js', () => {
 
-    // Before and after all tests : openning and closing mysql server connection
-    before((done) => {
-        connection = getConnection();
-        done();
-    });
-    after((done) => {
-        connection.end(done);
-    });
+    describe('database intercations', () => {
 
-    describe('finding', () => {
-
-        // Before all retrieving tests manual insertion and deletion of the dummyUser user in the database
-        before(insertDummy);
-        after(removeDummy);
-
-
-        it('findByEmail()', (done) => {
-
-            users.findByEmail(dummyUser.mail, (err, result) => {
-                
-                if (err) {
-                    done(err);
-                    return;
-                }
-
-                try {
-                    assert.deepEqual(result, dummyUser, 'user found is ok')
-                    done();
-                }
-                catch (err) {
-                    done(err);
-                }
-            });
+        // Before and after all tests : openning and closing mysql server connection
+        before((done) => {
+            connection = getConnection();
+            done();
+        });
+        after((done) => {
+            connection.end(done);
         });
 
+        describe('finding', () => {
 
-        it('findAll()', (done) => {
-            users.findAll((err, result) => {
-                if (err) {
-                    done(err);
-                    return;
-                }
-
-                var count = 0;
-
-                try {
-                    assert(result.some((element) => {
-                        return JSON.stringify(element) === JSON.stringify(dummyUser);
-                    }), 'the dummy is in the result array');
-                    done();
-                }
-                catch (err) {
-                    done(err);
-                }
-                
-            });
-        });
+            // Before all retrieving tests manual insertion and deletion of the dummyUser user in the database
+            before(insertDummy);
+            after(removeDummy);
 
 
-        it('findByID()', (done) => {
+            it('findByEmail()', (done) => {
 
-            users.findByID(dummyUser.id, (err, result) => {
-                
-                if (err) {
-                    done(err);
-                    return;
-                }
-
-                try {
-                    assert.deepEqual(result, dummyUser, 'user found is ok');
-                    done();
-                }
-                catch (err) {
-                    done(err);
-                }
-            });
-        });
-
-    });
-
-    describe('creating', () => {
-
-        // delete the normally inserted dummyUser after each insertion tests
-        // only if the test did well
-        afterEach(function (done) {
-            if (this.currentTest.state === 'passed') {
-                removeDummy(done);
-            }
-            else done();
-        });
-
-        it('create()', (done) => {
-            
-            users.create(dummyUser, (err, results) => {
-                
-                if (err) {
-                    done(err);
-                    return;
-                }
-
-                var id = dummyUser.id
-
-                // verifying the actual dummy for the same ID
-                connection.query('SELECT * FROM userTable WHERE id = ? ;', id, (err, results) => {
+                users.findByEmail(dummyUser.mail, (err, result) => {
                     
                     if (err) {
                         done(err);
                         return;
                     }
 
-                    var actual = {
-                        id: results[0].id,
-                        lastName: results[0].lastName,
-                        firstName: results[0].firstName,
-                        mail: results[0].mail,
-                        isAdmin: results[0].isAdmin,
-                        hashedPassword: results[0].hashedPassword
-                    }
-
                     try {
-                        assert.deepEqual(actual, dummyUser, 'user inserted corresponds to expected');
+                        assert.deepEqual(result, dummyUser, 'user found is ok')
                         done();
                     }
                     catch (err) {
                         done(err);
                     }
                 });
+            });
 
+
+            it('findAll()', (done) => {
+                users.findAll((err, result) => {
+                    if (err) {
+                        done(err);
+                        return;
+                    }
+
+                    var count = 0;
+
+                    try {
+                        assert(result.some((element) => {
+                            return JSON.stringify(element) === JSON.stringify(dummyUser);
+                        }), 'the dummy is in the result array');
+                        done();
+                    }
+                    catch (err) {
+                        done(err);
+                    }
+                    
+                });
+            });
+
+
+            it('findByID()', (done) => {
+
+                users.findByID(dummyUser.id, (err, result) => {
+                    
+                    if (err) {
+                        done(err);
+                        return;
+                    }
+
+                    try {
+                        assert.deepEqual(result, dummyUser, 'user found is ok');
+                        done();
+                    }
+                    catch (err) {
+                        done(err);
+                    }
+                });
             });
 
         });
-    });
 
-    describe('removing', () => {
+        describe('creating', () => {
 
-        // Insertion of the dummy user before each removal tests
-        beforeEach(insertDummy);
-
-        // Manual deletion of the dummy if test failed
-        afterEach(function (done) {
-            if (this.currentTest.state !== 'passed') {
-                removeDummy(done);
-            }
-            else {
-                done();
-            }
-        });
-
-        it('remove()', (done) => {
-            users.remove(dummyUser, (err) => {
-                if (err) {
-                    done(err);
-                    return;
+            // delete the normally inserted dummyUser after each insertion tests
+            // only if the test did well
+            afterEach(function (done) {
+                if (this.currentTest.state === 'passed') {
+                    removeDummy(done);
                 }
-
-                // verifying the dummy is not longer in the database
-                connection.query('SELECT * FROM userTable WHERE id = ? ;', dummyUser.id, (err, results) => {
-                    try {
-                        assert.equal(results[0], undefined, 'the dummy is not longer in the database');
-                        done();
-                    }
-                    catch (err) {
-                        done(err);
-                    }
-
-                });
-
+                else done();
             });
-        });
-    });
 
-    describe('updating', () => {
-        // Insertion of the dummy user before each updating tests
-        beforeEach(insertDummy);
-        // Deletion of the dummy after each updating tests
-        afterEach(removeDummy);
-
-        it('update()', (done) => {
-            updatedDummyUser = Object.assign({}, dummyUser);
-            // Never change the id
-            updatedDummyUser.isAdmin = 0;
-
-            users.update(updatedDummyUser, (err) => {
-                if (err) {
-                    done(err);
-                    return;
-                }
-
-                // verify the current dummy (same ID)
-                connection.query('SELECT * FROM userTable WHERE id = ? ;', dummyUser.id, (err, results) => {
-                    try {
-                        assert.notDeepEqual(results[0], dummyUser, 'the user has been changed')
-                        done();
-                    }
-                    catch (err) {
-                        done(err);
-                    }
-
-                });
-            });
-        });
-    });
-
-    describe('checkValues()', () => {
-        it('valid user', (done) => {
-            users.checkValues(dummyUser, (result) => {
+            it('create()', (done) => {
                 
-                try {
-                    assert.equal(result, undefined, 'values validated');
+                users.create(dummyUser, (err, results) => {
+                    
+                    if (err) {
+                        done(err);
+                        return;
+                    }
+
+                    var id = dummyUser.id
+
+                    // verifying the actual dummy for the same ID
+                    connection.query('SELECT * FROM userTable WHERE id = ? ;', id, (err, results) => {
+                        
+                        if (err) {
+                            done(err);
+                            return;
+                        }
+
+                        var actual = {
+                            id: results[0].id,
+                            lastName: results[0].lastName,
+                            firstName: results[0].firstName,
+                            mail: results[0].mail,
+                            isAdmin: results[0].isAdmin,
+                            hashedPassword: results[0].hashedPassword
+                        }
+
+                        try {
+                            assert.deepEqual(actual, dummyUser, 'user inserted corresponds to expected');
+                            done();
+                        }
+                        catch (err) {
+                            done(err);
+                        }
+                    });
+
+                });
+
+            });
+        });
+
+        describe('removing', () => {
+
+            // Insertion of the dummy user before each removal tests
+            beforeEach(insertDummy);
+
+            // Manual deletion of the dummy if test failed
+            afterEach(function (done) {
+                if (this.currentTest.state !== 'passed') {
+                    removeDummy(done);
+                }
+                else {
                     done();
                 }
-                catch (err) {
-                    done(err);
-                }
+            });
+
+            it('remove()', (done) => {
+                users.remove(dummyUser, (err) => {
+                    if (err) {
+                        done(err);
+                        return;
+                    }
+
+                    // verifying the dummy is not longer in the database
+                    connection.query('SELECT * FROM userTable WHERE id = ? ;', dummyUser.id, (err, results) => {
+                        try {
+                            assert.equal(results[0], undefined, 'the dummy is not longer in the database');
+                            done();
+                        }
+                        catch (err) {
+                            done(err);
+                        }
+
+                    });
+
+                });
             });
         });
 
-        describe('content', () => {
-            it('id', (done) => {
-                let tested = Object.assign({}, dummyUser); // valid fields
+        describe('updating', () => {
+            // Insertion of the dummy user before each updating tests
+            beforeEach(insertDummy);
+            // Deletion of the dummy after each updating tests
+            afterEach(removeDummy);
 
-                tested.id = invalidContent.id; // invalid field
+            it('update()', (done) => {
+                updatedDummyUser = Object.assign({}, dummyUser);
+                // Never change the id
+                updatedDummyUser.isAdmin = 0;
 
-                checkContent(tested, done);
-            });
+                users.update(updatedDummyUser, (err) => {
+                    if (err) {
+                        done(err);
+                        return;
+                    }
 
-            it('firstname', (done) => {
-                let tested = Object.assign({}, dummyUser); // valid fields
+                    // verify the current dummy (same ID)
+                    connection.query('SELECT * FROM userTable WHERE id = ? ;', dummyUser.id, (err, results) => {
+                        try {
+                            assert.notDeepEqual(results[0], dummyUser, 'the user has been changed')
+                            done();
+                        }
+                        catch (err) {
+                            done(err);
+                        }
 
-                tested.firstName = invalidContent.firstName; // invalid field
-
-                checkContent(tested, done);
-
-            });
-
-            it('lastname', (done) => {
-                let tested = Object.assign({}, dummyUser); // valid fields
-
-                tested.lastName = invalidContent.lastName; // invalid field
-
-                checkContent(tested, done);
-
-            });
-        });
-
-        describe('length', () => {
-            it('id', (done) => {
-                let tested = Object.assign({}, dummyUser); // valid fields
-
-                tested.id = invalidLength.id; // invalid field
-
-                checkLength(tested, done);
-            });
-
-            it('firstname', (done) => {
-                let tested = Object.assign({}, dummyUser); // valid fields
-
-                tested.firstName = invalidLength.firstName; // invalid field
-                
-                checkLength(tested, done);
-            });
-
-            it('lastname', (done) => {
-                let tested = Object.assign({}, dummyUser); // valid fields
-
-                tested.lastName = invalidLength.lastName; // invalid field
-
-                checkLength(tested, done);
+                    });
+                });
             });
         });
+    });
 
-        describe('mail', () => {
-            it('@ character', (done) => {
-                let tested = Object.assign({}, dummyUser); // valid fields
-
-                tested.mail = invalidMailNoAt; // invalid field
-
-                users.checkValues(tested, (result) => {
+    describe('validations', () => {
+        describe('checkValues()', () => {
+            it('valid user', (done) => {
+                users.checkValues(dummyUser, (result) => {
+                    
                     try {
-                        assert.deepEqual(result.error, 'content', 'mail content error detected');
+                        assert.equal(result, undefined, 'values validated');
                         done();
                     }
                     catch (err) {
@@ -355,19 +288,91 @@ describe('db/user.js', () => {
                 });
             });
 
-            it('space', (done) => {
-                let tested = Object.assign({}, dummyUser); // valid fields
+            describe('content', () => {
+                it('id', (done) => {
+                    let tested = Object.assign({}, dummyUser); // valid fields
 
-                tested.mail = invalidMailSpace; // invalid field
+                    tested.id = invalidContent.id; // invalid field
 
-                users.checkValues(tested, (result) => {
-                    try {
-                        assert.deepEqual(result.error, 'content', 'mail content error detected');
-                        done();
-                    }
-                    catch (err) {
-                        done(err);
-                    }
+                    checkContent(tested, done);
+                });
+
+                it('firstname', (done) => {
+                    let tested = Object.assign({}, dummyUser); // valid fields
+
+                    tested.firstName = invalidContent.firstName; // invalid field
+
+                    checkContent(tested, done);
+
+                });
+
+                it('lastname', (done) => {
+                    let tested = Object.assign({}, dummyUser); // valid fields
+
+                    tested.lastName = invalidContent.lastName; // invalid field
+
+                    checkContent(tested, done);
+
+                });
+            });
+
+            describe('length', () => {
+                it('id', (done) => {
+                    let tested = Object.assign({}, dummyUser); // valid fields
+
+                    tested.id = invalidLength.id; // invalid field
+
+                    checkLength(tested, done);
+                });
+
+                it('firstname', (done) => {
+                    let tested = Object.assign({}, dummyUser); // valid fields
+
+                    tested.firstName = invalidLength.firstName; // invalid field
+                    
+                    checkLength(tested, done);
+                });
+
+                it('lastname', (done) => {
+                    let tested = Object.assign({}, dummyUser); // valid fields
+
+                    tested.lastName = invalidLength.lastName; // invalid field
+
+                    checkLength(tested, done);
+                });
+            });
+
+            describe('mail', () => {
+                it('@ character', (done) => {
+                    let tested = Object.assign({}, dummyUser); // valid fields
+
+                    tested.mail = invalidMailNoAt; // invalid field
+
+                    users.checkValues(tested, (result) => {
+                        try {
+                            assert.deepEqual(result.error, 'content', 'mail content error detected');
+                            done();
+                        }
+                        catch (err) {
+                            done(err);
+                        }
+                    });
+                });
+
+                it('space', (done) => {
+                    let tested = Object.assign({}, dummyUser); // valid fields
+
+                    tested.mail = invalidMailSpace; // invalid field
+
+                    users.checkValues(tested, (result) => {
+                        try {
+                            assert.deepEqual(result.error, 'content', 'mail content error detected');
+                            done();
+                        }
+                        catch (err) {
+                            done(err);
+                        }
+                    });
                 });
             });
         });
