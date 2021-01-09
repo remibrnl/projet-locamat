@@ -3,6 +3,7 @@ var router = express.Router()
 var mysql = require('mysql')
 var bcrypt = require('bcrypt')
 
+var users = require('../db/users')
 var authenticateToken = require('../routes/authenticateToken.js');
 
 var connection = mysql.createConnection({
@@ -33,13 +34,14 @@ router.get('/',authenticateToken,(req,res) =>{
                 isAdmin: result[0].isAdmin
             }
     
-            res.render('profile',{title: 'Locamat : User profile', user: user})
+            res.render('profile',{title: 'Locamat : User profile', user: user, message: req.message})
         }
         
     })
 })
 
-router.post('/updateUser',authenticateToken,(req,res)=>{
+router.post('/updateUser',authenticateToken,(req,res,next)=>{
+  /*
   if(req.body.firstName != '') var firstName = req.body.firstName 
   else var firstName = req.user.firstName
   if(req.body.lastName != '') var lastName = req.body.lastName
@@ -54,6 +56,33 @@ router.post('/updateUser',authenticateToken,(req,res)=>{
     else{
       res.redirect('/profile')
     }
+  })
+  */
+ if(req.body.firstName != '') var firstName = req.body.firstName 
+  else var firstName = req.user.firstName
+  if(req.body.lastName != '') var lastName = req.body.lastName
+  else var lastName = req.user.lastName
+  if(req.body.mail != '') var mail = req.body.mail
+  else var mail = req.user.mail
+  var user = {
+    id: req.user.id,
+    firstName: firstName,
+    lastName: lastName,
+    mail: mail, 
+    isAdmin: req.user.isAdmin,
+    hashedPassword: req.user.hashedPassword
+  }
+  users.checkValues(user,(result)=>{
+    if(result != undefined){
+      res.render('profile',{title: 'Locamat : User profile', user: user, message: result.message})
+    }
+    users.update(user,(err,result)=>{
+      if(err){
+        next(err)
+        return
+      }
+      res.redirect('/profile')
+    })
   })
 })
 

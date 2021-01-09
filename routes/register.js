@@ -23,8 +23,8 @@ router.post('/', async(req, res, next)=>{
 
         if (req.body.isAdmin !== undefined) user.isAdmin = true;
 
-        var message = users.checkValues(user,(message)=>{
-            if(message != undefined){
+        users.checkValues(user,(result)=>{
+            if(result != undefined){
                 users.create(user, (err) => {
                     if (err) {
                         next(err);
@@ -34,7 +34,7 @@ router.post('/', async(req, res, next)=>{
                     res.redirect('/login');
                 })
             }
-            res.render('register', { title: 'Locamat : Register', message: message});
+            res.render('register', { title: 'Locamat : Register', message: result.message});
         })
         
     })

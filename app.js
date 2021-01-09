@@ -6,7 +6,6 @@ var logger = require('morgan')
 require('dotenv').config()
 
 var indexRouter = require('./routes/index')
-var usersRouter = require('./routes/users')
 var loginRouter = require('./routes/login')
 var adminUsersRouter = require('./routes/adminUsers')
 var registerRouteur = require('./routes/register')
@@ -36,7 +35,6 @@ app.use(express.static(__dirname + '/node_modules/bootstrap/dist'));
 
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use('/login', loginRouter);
 app.use('/adminUsers', adminUsersRouter);
 app.use('/adminDevices',adminDeviceRouter)
