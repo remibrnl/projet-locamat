@@ -9,14 +9,15 @@
             </div>
             <form action="/adminDevices/updateDevice" method="POST">
                 <div class="modal-body">
+                    <input type="hidden" name="deviceRef" value=<%= device.ref %>>
                     <div class="form-group">
                         <label for="newDeviceInputName" name="name">Nom</label>
-                        <input type="text" class="form-control" id="newDeviceInputName" value="<%= device.name %>">
+                        <input type="text" class="form-control" id="name" name="name" value="<%= device.name %>">
                     </div>
                     
                     <div class="form-group">
                         <label for="newDeviceInputVersion" name="version">Version</label>
-                        <input type="text" class="form-control" id="newDeviceInputVersion" value="<%= device.version %>">
+                        <input type="text" class="form-control" id="version" name="version" value="<%= device.version %>">
                     </div>
                     
                     <!-- <div class="form-group">

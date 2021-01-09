@@ -1,10 +1,10 @@
 var express = require('express')
 var router = express.Router()
-var jwt = require('jsonwebtoken')
+var jwt = require('jsonwebtoken');
 
 var devices = require('../db/devices.js');
+var authenticateToken = require('../routes/authenticateToken.js');
 
-//Faire router.get pour que AdminDEvices.html marche
 router.get('/',authenticateToken,(req,res,next)=>{
 
 	devices.findAll((err, result) => {
@@ -27,46 +27,51 @@ router.get('/',authenticateToken,(req,res,next)=>{
 
 });
 
-// User deletion confirmation
 router.post('/deleteDevice', (req, res, next) => {
-	devices.remove({ref: Object.keys(req.body)[0]}, (err) => {
-		if (err) {
-			next(err);
-			return;
+	devices.findByRef(req.body.deviceRef,(err,result)=>{
+		if(err){
+			next(err)
+			return
 		}
-
-		res.redirect('/adminDevices');
-	});
+		devices.remove(result,(err,result)=>{
+			if(err){
+				next(err)
+				return
+			}
+			res.redirect('/adminDevices')
+		})	
+	})
 });
 
 
 router.post('/updateDevice', (req, res, next) => {
-	var device = JSON.parse(Object.keys(req.body)[0]);
-	console.log(req.body);
+	devices.findByRef(req.body.deviceRef,(err,result)=>{
+		if(err){
+			next(err)
+			return 
+		}
+		var test = {
+			name: req.body.name,
+			version: req.body.version
+		}
+		updateDevice = {
+			ref: result.ref,
+            name: req.body.name,
+            version: req.body.version,
+            pictureUrl: result.pictureUrl,
+            borrowerID: result.borrowerID,
+            borrowingStartDate: result.borrowingStartDate,
+            borrowingEndDate: result.borrowingEndDate
+		}
 
-	res.redirect('/adminDevices');
+		devices.update(updateDevice,(err,result)=>{
+			if(err){
+				next(err)
+				return
+			}
+			res.redirect('/adminDevices');
+		})
+	})
 });
 
-function authenticateToken(req, res, next) {
-		const cookieToken = req.cookies 
-		const token = cookieToken.token
-		
-		if(token == null || token=="") { return res.redirect('login')} 
-		else{
-			jwt.verify(token.toString(), process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
-				if (err){
-					res.redirect('/login', {message: 'invalid token'})
-				}
-				
-				else if (!decoded) {
-					res.redirect('/login', {message: 'invalid token'})
-				}
-				else {
-					req.user = decoded
-					next()
-				}
-			})
-		}
-	}
-	
-	module.exports = router;
+module.exports = router;

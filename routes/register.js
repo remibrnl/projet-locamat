@@ -46,30 +46,6 @@ router.post('/', async(req, res, next)=>{
         next(err);
     });
 
-    /*
-    try {
-        var hashedPassword = await bcrypt.hash(req.body.password,10);
-        if(req.body.isAdmin === undefined){ var isAdmin = false }
-        else{ isAdmin = true }
-    
-        connection.query("INSERT INTO userTable(`id`,`lastName`,`firstName`,`mail`,`isAdmin`,`hashedPassword`) VALUES(?,?,?,?,?,?)",[
-            req.body.id, 
-            req.body.lastName,
-            req.body.firstName,
-            req.body.mail,
-            isAdmin,
-            hashedPassword    
-        ], (err, result) => {
-            if(err) {
-                next(err)
-            }
-            console.log(result)
-            res.redirect('/login')
-        });
-    } catch (err) {
-        connection.end();
-        next(err)
-    }*/
 })
 
 module.exports = router;

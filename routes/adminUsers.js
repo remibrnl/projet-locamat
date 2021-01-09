@@ -1,13 +1,13 @@
-const { request } = require('express');
 var express = require('express');
 var router = express.Router();
-var jwt = require('jsonwebtoken');
 var bcrypt = require('bcrypt')
 
 var users = require('../db/users.js');
 var devices = require('../db/devices.js');
+var authenticateToken = require('../routes/authenticateToken.js');
 
-router.get('/',authenticateToken,(req,res)=>{
+
+router.get('/',authenticateToken,(req,res,next)=>{
   users.findAll((err, userList) => {
     if (err) {
       next(err);
@@ -20,7 +20,7 @@ router.get('/',authenticateToken,(req,res)=>{
   })
 })
 
-router.post('/',authenticateToken,(req,res)=>{
+router.post('/',authenticateToken,(req,res,next)=>{
   res.cookie('searchID',req.body.searchId)
   var devicesList = [];
 
@@ -54,7 +54,7 @@ router.post('/',authenticateToken,(req,res)=>{
   })
 })
 
-router.post('/userModify',authenticateToken,async(req,res)=>{
+router.post('/userModify',authenticateToken,async(req,res,next)=>{
   bcrypt.hash(req.body.password,10)
   .then((hashedPassword) => {
     var updateUser ={
@@ -69,7 +69,8 @@ router.post('/userModify',authenticateToken,async(req,res)=>{
 
     users.update(updateUser,(err,result)=>{
       if(err){
-        throw err
+        next(err)
+        return
       }
       res.redirect('/adminUsers')
     })
@@ -80,7 +81,7 @@ router.post('deleteUser',authenticateToken,(req,res)=>{
   res.redirect('/')
 })
 
-router.post('/createUser',authenticateToken,(req,res)=>{
+router.post('/createUser',authenticateToken,(req,res,next)=>{
   bcrypt.hash(req.body.password,10)
   .then((hashedPassword) => {
     var updateUser ={
@@ -95,7 +96,8 @@ router.post('/createUser',authenticateToken,(req,res)=>{
 
     users.create(updateUser,(err,result)=>{
       if(err){
-        throw err
+        next(err)
+        return
       }
       res.redirect('/adminUsers')
     })
@@ -115,26 +117,5 @@ router.post('/deleteUser',(req,res,next)=>{
   })
 })
 
-function authenticateToken(req, res, next) { 
-  const cookieToken = req.cookies 
-  const token = cookieToken.token
-  
-  if(token == null || token=="") { return res.redirect('login')} 
-  else{
-    jwt.verify(token.toString(), process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
-      if (err){
-        res.redirect('/login', {message: 'invalid token'})
-      }
-      
-      else if (!decoded) {
-        res.redirect('/login', {message: 'invalid token'})
-      }
-      else {
-        req.user = decoded
-        next()
-      }
-    })
-  }
-}
 
 module.exports = router 

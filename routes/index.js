@@ -8,14 +8,14 @@ var devices = require('../db/devices.js');
 var authenticateToken = require('../routes/authenticateToken.js');
 
 /* GET home page. */
-router.get('/', authenticateToken, (req, res) =>{
+router.get('/', authenticateToken, (req, res, next) =>{
 
 	devices.findByUser(req.user,(err, result) => {
 		if (err) {
-			throw err;
+			next(err)
+			return
 		}
 		
-
 		var devicesList = [];
 		var count = 0;
 		const options = {weekdat: 'long', year: 'numeric', month: 'long', day:'numeric'};
