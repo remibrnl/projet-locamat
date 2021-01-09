@@ -155,7 +155,7 @@ function update(device, callback) {
     })
 }
 
-function checkValues(device,callback){
+function checkValues(device, callback){
     var regexAlphaNum = /^[a-zA-Z0-9]*$/i
     if(!device.name.match(regexAlphaNum) || !device.version.match(regexAlphaNum) || !device.ref.match(regexAlphaNum)){
         callback(
@@ -184,5 +184,6 @@ module.exports = {
     findByUser: findByUser,
     create: create,
     remove: remove,
-    update: update
+    update: update,
+    checkValues: checkValues
 }

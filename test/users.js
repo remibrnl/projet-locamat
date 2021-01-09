@@ -270,7 +270,7 @@ describe('db/user.js', () => {
         });
     });
 
-    describe.only('checkValues()', () => {
+    describe('checkValues()', () => {
         it('valid user', (done) => {
             users.checkValues(dummyUser, (result) => {
                 

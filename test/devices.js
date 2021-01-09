@@ -16,23 +16,25 @@ var dummyUser = {
 };
 
 var dummyDevice = {
-    ref: 'A459',
-    name: 'iPhone 12 Pro',
-    version: '2',
+    ref: 'A459B',
+    name: 'iPhone',
+    version: '12 Pro',
     pictureUrl: 'img/phones/apple-iphone12-pro.png',
     borrowerID: dummyUser.id,
     borrowingStartDate: new Date('2021-01-01 12:00:00'),
     borrowingEndDate: new Date('2021-02-20 20:30:00')
 };
 
-var invalidDevice = {
-    ref: 'A45@94132',
-    name: 'iPhone 12 Pro',
-    version: '2&',
-    pictureUrl: 'img/phones/apple-iphone12-pro.png',
-    borrowerID: '456#B',
-    borrowingStartDate: new Date('2021-01-01 12:00:00'),
-    borrowingEndDate: new Date('2021-02-20 20:30:00')
+var invalidContent = {
+    ref: 'A459',
+    name: 'oui@',
+    version: '#A2',
+};
+
+var invalidLength = {
+    ref: 'A459azertyuiopqsdfghjklmwxcvbdsry01',
+    name: 'azertyuiopqsdfghjklmwxcvbnazerty',
+    version: 'azertyuiopqsdfghjklmwxcvbnazerty',
 };
 
 // Dummy device manual insertion
@@ -53,6 +55,30 @@ function insertDummyUser(done) {
 // Dummy manual removal
 function removeDummyUser(done) {
     connection.query('DELETE FROM userTable WHERE id = ? ;', dummyUser.id, done);
+}
+
+function checkContent(tested, done) {
+    devices.checkValues(tested, (result) => {
+        try {
+            assert.deepEqual(result.error, 'content', 'content error detected');
+            done();
+        }
+        catch (err) {
+            done(err);
+        }
+    });
+}
+
+function checkLength(tested, done) {
+    devices.checkValues(tested, (result) => {
+        try {
+            assert.deepEqual(result.error, 'length', 'length error detected');
+            done();
+        }
+        catch (err) {
+            done(err);
+        }
+    });
 }
 
 describe('db/devices.js', () => {
@@ -261,6 +287,75 @@ describe('db/devices.js', () => {
                 });
             });
         });
+    });
+
+    describe('checkValues()', () => {
+        it('valid device', (done) => {
+            devices.checkValues(dummyDevice, (result) => {
+                try {
+                    assert.equal(result, undefined, 'values validated');
+                    done();
+                }
+                catch (err) {
+                    done(err);
+                }
+            });
+        });
+
+        describe('content', () => {
+            it('ref', (done) => {
+                let tested = Object.assign({}, dummyDevice); // valid fields
+
+                tested.ref = invalidContent.ref; // invalid field
+
+                checkContent(tested, done);
+            });
+
+            it('name', (done) => {
+                let tested = Object.assign({}, dummyDevice); // valid fields
+
+                tested.name = invalidContent.name; // invalid field
+
+                checkContent(tested, done);
+
+            });
+
+            it('version', (done) => {
+                let tested = Object.assign({}, dummyDevice); // valid fields
+
+                tested.version = invalidContent.version; // invalid field
+
+                checkContent(tested, done);
+
+            });
+        });
+
+        describe('length', () => {
+            it('ref', (done) => {
+                let tested = Object.assign({}, dummyDevice); // valid fields
+
+                tested.ref = invalidLength.ref; // invalid field
+
+                checkLength(tested, done);
+            });
+
+            it('name', (done) => {
+                let tested = Object.assign({}, dummyDevice); // valid fields
+
+                tested.name = invalidLength.name; // invalid field
+                
+                checkLength(tested, done);
+            });
+
+            it('version', (done) => {
+                let tested = Object.assign({}, dummyDevice); // valid fields
+
+                tested.version = invalidLength.version; // invalid field
+
+                checkLength(tested, done);
+            });
+        });
+
     });
 
 });
