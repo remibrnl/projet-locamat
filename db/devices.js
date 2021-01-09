@@ -156,7 +156,13 @@ function update(device, callback) {
 }
 
 function checkValues(device, callback){
+    console.log('checkValue device : ',device)
+
     var regexAlphaNum = /^[a-zA-Z0-9]*$/i
+    var nameLength = device.name.length
+    var versionLength = device.version.length
+    var refLength = device.ref.length
+
     if(!device.name.match(regexAlphaNum) || !device.version.match(regexAlphaNum) || !device.ref.match(regexAlphaNum)){
         callback(
             {
@@ -165,7 +171,7 @@ function checkValues(device, callback){
             })
         return 
     }
-    else if((!(device.name.length <= 30) || !(device.name.length >= 1)) || (!(device.version.length <= 15) || !(device.version.length >= 3)) || !(device.length.ref == 5)){
+    else if((!(nameLength <= 30) || !(nameLength >= 1)) || (!(versionLength <= 15) || !(versionLength >= 3)) || !(refLength == 5)){
         callback(
             {
                 error: 'length', 
