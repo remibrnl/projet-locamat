@@ -165,7 +165,7 @@ function checkValues(device, callback){
             })
         return 
     }
-    else if(!(device.name.length <= 30) || !(device.name.length >= 1) || !(device.version.length <= 15) || !(device.version.length >= 3) || !(device.length.ref == 5)){
+    else if((!(device.name.length <= 30) || !(device.name.length >= 1)) || (!(device.version.length <= 15) || !(device.version.length >= 3)) || !(device.length.ref == 5)){
         callback(
             {
                 error: 'length', 

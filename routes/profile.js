@@ -32,23 +32,7 @@ router.get('/',authenticateToken,(req,res) =>{
 })
 
 router.post('/updateUser',authenticateToken,(req,res,next)=>{
-  /*
-  if(req.body.firstName != '') var firstName = req.body.firstName 
-  else var firstName = req.user.firstName
-  if(req.body.lastName != '') var lastName = req.body.lastName
-  else var lastName = req.user.lastName
-  if(req.body.mail != '') var mail = req.body.mail
-  else var mail = req.user.mail
-  connection.query("UPDATE usertable SET firstName = ? , lastName = ? , mail = ?  WHERE id = ? ; ", [firstName,lastName,mail,req.user.id],(err,result)=>{
-    if(result == null){
-      console.log(result)
-      res.sendStatus(404)    
-    }
-    else{
-      res.redirect('/profile')
-    }
-  })
-  */
+
  if(req.body.firstName != '') var firstName = req.body.firstName 
   else var firstName = req.user.firstName
   if(req.body.lastName != '') var lastName = req.body.lastName
@@ -81,18 +65,30 @@ router.post('/updateUser',authenticateToken,(req,res,next)=>{
 })
 
 router.post('/passwordChange',authenticateToken, async(req,res)=>{
-  console.log(req.user.id)
   if(await bcrypt.compare(req.body.formerPassword,req.user.password)){
     var newHashedPassword = await bcrypt.hash(req.body.newPassword,10)
-    connection.query("UPDATE usertable SET hashedPassword = ? WHERE id = ? ; ", [newHashedPassword,req.user.id],(err,result)=>{
-      if(result == null){
-        console.log(result)
-        res.sendStatus(404)    
-      }
-      else{
-        res.redirect('/profile')
-      }
+    var user = {
+      id: req.user.id,
+      firstName: firstName,
+      lastName: lastName,
+      mail: mail, 
+      isAdmin: req.user.isAdmin,
+      hashedPassword: newHashedPassword
+    }
+    users.checkValues(user,(err,result)=>{
+      users.update(user,(err,result)=>{
+        if(result == null){
+          console.log(result)
+          res.sendStatus(404)    
+        }
+        else{
+          res.redirect('/profile')
+        }
+      })
     })
+  }
+  else{
+    res.redirect('/profile')
   }
 })
 

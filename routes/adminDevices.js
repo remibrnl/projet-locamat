@@ -1,3 +1,4 @@
+const { version } = require('chai');
 var express = require('express')
 var router = express.Router()
 var jwt = require('jsonwebtoken');
@@ -73,5 +74,38 @@ router.post('/updateDevice', (req, res, next) => {
 		})
 	})
 });
+
+router.post('/createDevice',authenticateToken,(req,res,next)=>{
+	if(req.body.pictureUrl != undefined) pictureUrl = req.body.pictureUrl
+	else pictureUrl = null
+
+	var newDevice = {
+		ref: req.body.ref,
+		name: req.body.name,
+		version: req.body.version,
+		pictureUrl: pictureUrl,
+		borrowerID: null,
+		borrowingStartDate: null,
+		borrowingEndDate: null
+	}
+	console.log(newDevice)
+
+	devices.checkValues(newDevice,(result)=>{
+		if(result != undefined){
+			devices.create(newDevice,(err,result)=>{
+				if(err){
+					next(err)
+					return
+				}
+				res.redirect('/adminDevices')	
+			})
+			
+		}
+		else{
+			res.redirect('/adminDevices')
+		}
+		
+	})	
+})
 
 module.exports = router;

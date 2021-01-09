@@ -9,34 +9,38 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form>
+				<form action="/adminDevices/createDevice" method="POST">
+
+					<div class="form-group">
+						<label for="newDeviceInputName">Reference</label>
+						<input type="text" class="form-control" id="newDeviceInputRef" name="ref" placeholder="AP000" required>
+					</div>
 
 					<div class="form-group">
 							<label for="newDeviceInputName">Nom</label>
-							<input type="text" class="form-control" id="newDeviceInputName" placeholder="iPhone 12 Pro">
+							<input type="text" class="form-control" id="newDeviceInputName" name="name" placeholder="iPhone 12 Pro" required>
 					</div>
 					
 					<div class="form-group">
 						<label for="newDeviceInputVersion">Version</label>
-						<input type="number" class="form-control" id="newDeviceInputVersion" placeholder="2">
+						<input type="text" class="form-control" id="newDeviceInputVersion" name="version" placeholder="2" required>
 					</div>
 					
 					<div class="form-group">
-						<label for="newDeviceInputPicture">Photo</label>
-						<input type="file" class="form-control-file" id="newUserInputPicture">
+						<label for="newDeviceInputPicture">Photo URL</label>
+						<input type="text" class="form-control" id="newUserInputPicture" name="pictureUrl">
 					</div>
 					
 					<!-- <div class="form-group">
 						<label for="newDeviceInputPhoneNumber">Numero de téléphone</label>
 						<input type="number" class="form-control" id="newDeviceInputPhoneNumber" placeholder="0656842034">
 					</div> -->
-
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+						<button type="submit" class="btn btn-primary">Créer</button>
+					</div>
 				</form>
-		</div>
-		<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-				<button type="button" class="btn btn-primary">Créer</button>
-			</div>
+			</div>	
 		</div>
 	</div>
 </div>
